@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EF3FAF7B-1010-4334-A181-FA913E04F78A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calmative.Server.API", "Server\Calmative.Server.API\Calmative.Server.API.csproj", "{07F19101-1743-43ED-BC22-A3610BF50B22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{1CD4234B-E0CB-44D2-9AC8-F69447DFF6D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calmative.Web.App", "Web\Calmative.Web.App\Calmative.Web.App.csproj", "{4908A170-BDA0-42A1-BD14-DC3426003154}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07F19101-1743-43ED-BC22-A3610BF50B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F19101-1743-43ED-BC22-A3610BF50B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F19101-1743-43ED-BC22-A3610BF50B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F19101-1743-43ED-BC22-A3610BF50B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4908A170-BDA0-42A1-BD14-DC3426003154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4908A170-BDA0-42A1-BD14-DC3426003154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4908A170-BDA0-42A1-BD14-DC3426003154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4908A170-BDA0-42A1-BD14-DC3426003154}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{07F19101-1743-43ED-BC22-A3610BF50B22} = {EF3FAF7B-1010-4334-A181-FA913E04F78A}
+		{4908A170-BDA0-42A1-BD14-DC3426003154} = {1CD4234B-E0CB-44D2-9AC8-F69447DFF6D8}
+	EndGlobalSection
+EndGlobal

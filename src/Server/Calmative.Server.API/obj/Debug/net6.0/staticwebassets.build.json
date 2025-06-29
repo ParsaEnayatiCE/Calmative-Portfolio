@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "v7N2CFFpz8wK+BVc7MQB37FU4RUMEwKyta3lhN9mHQg=",
+  "Source": "Calmative.Server.API",
+  "BasePath": "_content/Calmative.Server.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

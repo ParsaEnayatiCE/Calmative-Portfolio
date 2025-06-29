@@ -1,0 +1,236 @@
+@model Calmative.Web.App.Models.ViewModels.DashboardViewModel
+@using Calmative.Web.App.Models.ViewModels
+@{
+    ViewData["Title"] = "داشبورد";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">@ViewData["Title"]</h1>
+
+    @if (Model == null || Model.PortfolioCount == 0)
+    {
+        <div class="alert alert-info text-center">
+            <p>هیچ داده‌ای برای نمایش در داشبورد وجود ندارد.</p>
+            <p>برای شروع، لطفاً یک <a asp-controller="Portfolio" asp-action="Create">پورتفولیو جدید بسازید</a> و دارایی‌های خود را به آن اضافه کنید.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Summary Cards -->
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    ارزش کل دارایی‌ها
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="direction: ltr;">@Model.TotalValue.ToString("N0") ریال</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    کل سرمایه‌گذاری
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="direction: ltr;">@Model.TotalInvestment.ToString("N0") ریال</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-cash-register fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card @(Model.TotalProfitLoss >= 0 ? "border-left-info" : "border-left-danger") shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold @(Model.TotalProfitLoss >= 0 ? "text-info" : "text-danger") text-uppercase mb-1">
+                                    سود/زیان کل
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="direction: ltr;">@Model.TotalProfitLoss.ToString("N0") ریال</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                 <div class="card @(Model.TotalProfitLossPercentage >= 0 ? "border-left-info" : "border-left-danger") shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold @(Model.TotalProfitLossPercentage >= 0 ? "text-info" : "text-danger") text-uppercase mb-1">
+                                   درصد سود/زیان
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.TotalProfitLossPercentage.ToString("F2")%</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar @(Model.TotalProfitLossPercentage >= 0 ? "bg-info" : "bg-danger")" role="progressbar"
+                                                 style="width: @(Math.Abs(Model.TotalProfitLossPercentage))%" aria-valuenow="@Model.TotalProfitLossPercentage" aria-valuemin="-100" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-percentage fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">توزیع انواع دارایی</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-pie pt-4">
+                            <canvas id="assetTypeDistributionChart"></canvas>
+                        </div>
+                         @if (Model.AssetTypeDistribution == null || !Model.AssetTypeDistribution.Any())
+                        {
+                            <div class="text-center mt-3">داده‌ای برای نمایش نمودار توزیع دارایی وجود ندارد.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                 <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">دارایی‌ها با بهترین عملکرد</h6>
+                    </div>
+                    <div class="card-body">
+                       @if (Model.TopPerformingAssets != null && Model.TopPerformingAssets.Any())
+                        {
+                            <ul class="list-group">
+                                @foreach (var asset in Model.TopPerformingAssets)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@asset.Name (@asset.TypeDisplayName)</span>
+                                        <span class="badge @(asset.ProfitLossPercentage >= 0 ? "badge-success" : "badge-danger") text-dark" style="direction: ltr;">
+                                            @asset.ProfitLossPercentage.ToString("F2")%
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <div class="text-center">داده‌ای برای نمایش وجود ندارد.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    $(document).ready(function () {
+        // Asset Type Distribution Chart
+        var assetTypeData = @Html.Raw(Json.Serialize(Model?.AssetTypeDistribution));
+
+        if (assetTypeData && assetTypeData.length > 0) {
+            var ctx = document.getElementById('assetTypeDistributionChart').getContext('2d');
+            var labels = assetTypeData.map(function(item) {
+                 // Assuming you have a helper in C# or can map it here
+                return item.assetType;
+            });
+            var data = assetTypeData.map(function(item) {
+                return item.value;
+            });
+
+            // Persian display names mapping
+             var persianLabels = labels.map(function(label) {
+                switch (label) {
+                    case "Stock": return "سهام";
+                    case "Crypto": return "ارز دیجیتال";
+                    case "Gold": return "طلا";
+                    case "Silver": return "نقره";
+                    case "Currency": return "ارز";
+                    case "Car": return "ماشین";
+                    default: return "نامشخص";
+                }
+            });
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: persianLabels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796'],
+                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617', '#60616f'],
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                             labels: {
+                                font: {
+                                    family: "Vazir"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('fa-IR').format(context.parsed) + ' ریال';
+                                    }
+                                    return label;
+                                },
+                                title: function(context) {
+                                    // a bit of a hack to get Vazir font in tooltip title
+                                    return context[0].label;
+                                }
+                            },
+                             bodyFont: {
+                                family: 'Vazir'
+                            },
+                            titleFont: {
+                                family: 'Vazir'
+                            }
+                        }
+                    }
+                },
+            });
+        }
+    });
+    </script>
+} 

@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Registration Confirmation";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h3><i class="fas fa-check-circle"></i> Registration Successful!</h3>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-envelope fa-5x text-primary mb-4"></i>
+                    <h4>Please Check Your Email</h4>
+                    <p class="lead">We've sent a confirmation email to your registered email address.</p>
+                    <p>Please click the link in the email to confirm your account before logging in.</p>
+                    <hr />
+                    <p class="text-muted">Didn't receive the email? Check your spam folder or contact support.</p>
+                    <a asp-action="Login" class="btn btn-primary mt-3">
+                        <i class="fas fa-sign-in-alt"></i> Go to Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

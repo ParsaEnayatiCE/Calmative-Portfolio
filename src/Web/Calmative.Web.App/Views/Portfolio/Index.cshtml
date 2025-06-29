@@ -1,0 +1,142 @@
+@model List<Calmative.Web.App.Models.ViewModels.PortfolioViewModel>
+
+@{
+    ViewData["Title"] = "پورتفولیوها";
+}
+
+<div class="container">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2><i class="fas fa-briefcase me-2"></i>پورتفولیوهای شما</h2>
+            <p class="text-muted">مدیریت و نظارت بر پورتفولیوهای سرمایه‌گذاری</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i>پورتفولیو جدید
+        </a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <!-- Portfolio Grid -->
+        <div class="portfolio-grid">
+            @foreach (var portfolio in Model)
+            {
+                <div class="card fade-in">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-folder-open me-2"></i>@portfolio.Name
+                        </h5>
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-action="Details" asp-route-id="@portfolio.Id">
+                                    <i class="fas fa-eye me-2"></i>مشاهده جزئیات
+                                </a></li>
+                                <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@portfolio.Id">
+                                    <i class="fas fa-edit me-2"></i>ویرایش
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="confirmDelete(@portfolio.Id, '@portfolio.Name')">
+                                    <i class="fas fa-trash me-2"></i>حذف
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (!string.IsNullOrEmpty(portfolio.Description))
+                        {
+                            <p class="text-muted mb-3">@portfolio.Description</p>
+                        }
+                        
+                        <div class="row text-center mb-3">
+                            <div class="col-4">
+                                <div class="fw-bold text-primary">@portfolio.AssetCount</div>
+                                <small class="text-muted">دارایی</small>
+                            </div>
+                            <div class="col-4">
+                                <div class="fw-bold">@portfolio.TotalValue.ToString("N0")</div>
+                                <small class="text-muted">ارزش کل (تومان)</small>
+                            </div>
+                            <div class="col-4">
+                                <div class="fw-bold @(portfolio.IsProfit ? "text-profit" : "text-loss")">
+                                    @(portfolio.IsProfit ? "+" : "")@portfolio.TotalProfitLossPercentage.ToString("F1")%
+                                </div>
+                                <small class="text-muted">سود/زیان</small>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <a asp-action="Details" asp-route-id="@portfolio.Id" class="btn btn-outline-primary">
+                                <i class="fas fa-chart-line me-2"></i>مشاهده جزئیات
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>
+                            <i class="fas fa-calendar me-1"></i>
+                            ایجاد شده: @portfolio.CreatedAt.ToString("yyyy/MM/dd")
+                        </small>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Empty State -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body py-5">
+                        <i class="fas fa-briefcase fa-3x text-muted mb-4"></i>
+                        <h4>هیچ پورتفولیویی وجود ندارد</h4>
+                        <p class="text-muted mb-4">برای شروع، اولین پورتفولیو خود را ایجاد کنید.</p>
+                        <a asp-action="Create" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-2"></i>ایجاد اولین پورتفولیو
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تأیید حذف</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>آیا از حذف پورتفولیو "<span id="portfolioName"></span>" اطمینان دارید؟</p>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    این عمل قابل بازگشت نیست و تمام دارایی‌های این پورتفولیو نیز حذف خواهد شد.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                <form id="deleteForm" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>حذف
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete(portfolioId, portfolioName) {
+            document.getElementById('portfolioName').textContent = portfolioName;
+            document.getElementById('deleteForm').action = '@Url.Action("Delete", "Portfolio")/' + portfolioId;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+    </script>
+} 
