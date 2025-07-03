@@ -7,15 +7,15 @@ namespace Calmative.Admin.Web.Services
 {
     public class ApiSettings
     {
-        public string BaseUrl { get; set; }
+        public string BaseUrl { get; set; } = string.Empty;
     }
 
     public interface IApiService
     {
-        Task<T> GetAsync<T>(string endpoint, string adminToken);
-        Task<HttpResponseMessage> PostAsync(string endpoint, object data, string adminToken = null);
-        Task<HttpResponseMessage> PutAsync(string endpoint, object data, string adminToken = null);
-        Task<HttpResponseMessage> DeleteAsync(string endpoint, string adminToken = null);
+        Task<T?> GetAsync<T>(string endpoint, string? adminToken);
+        Task<HttpResponseMessage> PostAsync(string endpoint, object data, string? adminToken = null);
+        Task<HttpResponseMessage> PutAsync(string endpoint, object data, string? adminToken = null);
+        Task<HttpResponseMessage> DeleteAsync(string endpoint, string? adminToken = null);
     }
 
     public class ApiService : IApiService
@@ -29,7 +29,7 @@ namespace Calmative.Admin.Web.Services
             _baseUrl = options.Value.BaseUrl;
         }
 
-        public async Task<T> GetAsync<T>(string endpoint, string adminToken)
+        public async Task<T?> GetAsync<T>(string endpoint, string? adminToken)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}{endpoint}");
             
@@ -48,7 +48,7 @@ namespace Calmative.Admin.Web.Services
             });
         }
 
-        public async Task<HttpResponseMessage> PostAsync(string endpoint, object data, string adminToken = null)
+        public async Task<HttpResponseMessage> PostAsync(string endpoint, object data, string? adminToken = null)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}{endpoint}");
             
@@ -63,7 +63,7 @@ namespace Calmative.Admin.Web.Services
             return await _httpClient.SendAsync(request);
         }
 
-        public async Task<HttpResponseMessage> PutAsync(string endpoint, object data, string adminToken = null)
+        public async Task<HttpResponseMessage> PutAsync(string endpoint, object data, string? adminToken = null)
         {
             var request = new HttpRequestMessage(HttpMethod.Put, $"{_baseUrl}{endpoint}");
             
@@ -78,7 +78,7 @@ namespace Calmative.Admin.Web.Services
             return await _httpClient.SendAsync(request);
         }
 
-        public async Task<HttpResponseMessage> DeleteAsync(string endpoint, string adminToken = null)
+        public async Task<HttpResponseMessage> DeleteAsync(string endpoint, string? adminToken = null)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, $"{_baseUrl}{endpoint}");
             

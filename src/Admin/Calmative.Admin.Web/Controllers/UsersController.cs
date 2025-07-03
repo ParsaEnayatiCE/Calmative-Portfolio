@@ -29,8 +29,8 @@ namespace Calmative.Admin.Web.Controllers
                 
                 var model = new UsersListViewModel
                 {
-                    Users = users,
-                    TotalUsers = users.Count
+                    Users = users ?? new List<UserViewModel>(),
+                    TotalUsers = users?.Count ?? 0
                 };
 
                 return View(model);
@@ -57,12 +57,20 @@ namespace Calmative.Admin.Web.Controllers
                 var model = new UserDetailsViewModel();
                 
                 // Fetch user details
-                model.User = await _apiService.GetAsync<UserViewModel>($"/api/admin/users/{id}", GetAdminToken());
+                var user = await _apiService.GetAsync<UserViewModel>($"/api/admin/users/{id}", GetAdminToken());
+                if (user != null)
+                {
+                    model.User = user;
+                }
 
                 try
                 {
                     // Fetch portfolios
-                    model.Portfolios = await _apiService.GetAsync<List<UserPortfolioViewModel>>($"/api/admin/users/{id}/portfolios", GetAdminToken());
+                    var portfolios = await _apiService.GetAsync<List<UserPortfolioViewModel>>($"/api/admin/users/{id}/portfolios", GetAdminToken());
+                    if (portfolios != null)
+                    {
+                        model.Portfolios = portfolios;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -72,7 +80,11 @@ namespace Calmative.Admin.Web.Controllers
                 try
                 {
                     // Fetch activities
-                    model.Activities = await _apiService.GetAsync<List<UserActivityViewModel>>($"/api/admin/users/{id}/activities", GetAdminToken());
+                    var activities = await _apiService.GetAsync<List<UserActivityViewModel>>($"/api/admin/users/{id}/activities", GetAdminToken());
+                    if (activities != null)
+                    {
+                        model.Activities = activities;
+                    }
                 }
                 catch (Exception ex)
                 {

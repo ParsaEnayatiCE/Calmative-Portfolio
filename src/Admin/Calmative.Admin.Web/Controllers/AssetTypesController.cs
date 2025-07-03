@@ -26,8 +26,8 @@ namespace Calmative.Admin.Web.Controllers
                 
                 var model = new AssetTypesListViewModel
                 {
-                    BuiltInTypes = ConvertToAssetTypeViewModels(response.BuiltInTypes, true),
-                    CustomTypes = ConvertToAssetTypeViewModels(response.CustomTypes, false)
+                    BuiltInTypes = response != null ? ConvertToAssetTypeViewModels(response.BuiltInTypes, true) : new List<AssetTypeViewModel>(),
+                    CustomTypes = response != null ? ConvertToAssetTypeViewModels(response.CustomTypes, false) : new List<AssetTypeViewModel>()
                 };
                 
                 return View(model);
@@ -89,6 +89,12 @@ namespace Calmative.Admin.Web.Controllers
             try
             {
                 var assetType = await _apiService.GetAsync<CustomAssetTypeDto>($"/api/admin/asset-types/custom/{id}", GetAdminToken());
+                
+                if (assetType == null)
+                {
+                    TempData["ErrorMessage"] = "نوع دارایی یافت نشد";
+                    return RedirectToAction(nameof(Index));
+                }
                 
                 var model = new UpdateAssetTypeViewModel
                 {
