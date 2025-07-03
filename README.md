@@ -1,118 +1,252 @@
-# Calmative Portfolio
+# Calmative Portfolio Management System
 
-A full-stack portfolio management web application built with ASP.NET Core 6.0.  The solution contains three main projects:
+<div align="center">
+  <img src="docs/logo.svg" alt="Calmative Logo" width="200">
+  <h3>A comprehensive portfolio management solution for tracking diverse assets</h3>
+  <p>Built with ASP.NET Core 6.0, Entity Framework Core, and modern web technologies</p>
+</div>
 
-1. **Calmative.Server.API** – a RESTful Web API that handles authentication (JWT), email confirmation/reset, portfolio & asset CRUD, price history and dashboard analytics.
-2. **Calmative.Web.App** – an MVC web front-end that consumes the API and provides a modern, RTL-friendly UI (Persian) built with Bootstrap 5, Chart.js and jQuery.
-3. **Calmative.Admin.Web** – a separate admin panel with hardcoded credentials for administrators to manage users and view their portfolios and activities.
+![Dashboard Screenshot](https://raw.githubusercontent.com/ParsaEnayatiCE/Calmative-Portfolio/main/docs/screenshot-dashboard.png)
 
-![Screenshot](docs/screenshot-dashboard.png)
+## 📋 Overview
 
----
+Calmative is a full-stack portfolio management system designed to help users track and analyze their investments across various asset classes. The system features a modern, RTL-friendly interface in Persian (Farsi) and provides powerful analytics to help users make informed investment decisions.
 
-## Features
+The solution consists of three main components:
 
-### Authentication & Security
-* User registration with email confirmation (SMTP or `smtp4dev` in development).
-* JWT-based login, cookie storage on the web app, token validation middleware on the API.
-* Forgot/Reset password, change-password inside profile page.
-* BCrypt password hashing.
+1. **Server API** - RESTful backend service handling data operations, authentication, and business logic
+2. **Web Application** - User-facing MVC frontend for portfolio management
+3. **Admin Panel** - Administrative interface for system management and monitoring
 
-### Portfolio Management
-* Unlimited portfolios per user, each containing multiple assets.
-* Asset types: Currency, Gold, Silver, Crypto, Precious Metals, Car (extensible enum).
-* CRUD for portfolios and assets with modals & confirmation dialogs.
-* Automatic price-history logging on asset creation / update.
+## ✨ Key Features
 
-### Dashboard & Analytics
-* Overview cards (total value, investment, P/L, distribution).
-* Doughnut & line charts powered by Chart.js.
-* Asset type distribution and top performers.
+### 📊 Portfolio Management
+- Create multiple portfolios for different investment strategies
+- Track a wide variety of asset types (currencies, precious metals, crypto, real estate, etc.)
+- Custom asset types support through admin panel
+- Real-time performance tracking with profit/loss calculations
 
-### Admin Interface
-* Separate admin panel with hardcoded credentials.
-* User management with ability to view and delete users.
-* Detailed user information including portfolios and activity history.
-* System-wide statistics and metrics.
+### 📈 Analytics & Reporting
+- Comprehensive dashboard with key performance indicators
+- Visual data representation through interactive charts
+- Asset distribution analysis
+- Historical performance tracking
 
-### Internationalisation / RTL Support
-* Fully translated UI (Persian/Farsi).
-* Bootstrap RTL build, custom CSS utilities.
+### 🔐 Security & Authentication
+- JWT-based authentication system
+- Email verification workflow
+- Password reset functionality
+- Secure password storage with BCrypt hashing
 
-### Quality & Tooling
-* Entity Framework Core 6 with SQL Server.
-* AutoMapper DTO/entity mapping.
-* Structured logging via ASP.NET Core logger.
-* Docker-compose file for `smtp4dev` (development mail catcher).
-* Extensive unit & integration tests **(coming soon)**.
+### 👤 User Management
+- User registration and profile management
+- Email notifications for important actions
+- Role-based access control
 
----
+### 🛠️ Administration
+- Dedicated admin panel with enhanced capabilities
+- User management and oversight
+- Custom asset type creation
+- System monitoring and maintenance tools
 
-## Getting Started
+## 🏗️ Architecture
+
+The system follows a modern N-tier architecture:
+
+- **Presentation Layer**: MVC views, controllers, and client-side JavaScript
+- **Service Layer**: Business logic implementation and API controllers
+- **Data Access Layer**: Entity Framework Core with repository pattern
+- **Database Layer**: SQL Server database with migrations
+
+### Technology Stack
+
+- **Backend**: ASP.NET Core 6.0, Entity Framework Core
+- **Frontend**: Bootstrap 5 (RTL), Chart.js, jQuery
+- **Authentication**: JWT tokens, ASP.NET Core Identity
+- **Database**: Microsoft SQL Server
+- **Tools**: Docker, SMTP service for emails
+
+## 🚀 Getting Started
 
 ### Prerequisites
-* [.NET 6 SDK](https://dotnet.microsoft.com) or newer
-* SQL Server (LocalDB is fine) – connection string in `appsettings.Development.json`
-* Node/NPM (optional – only if you want to rebuild JS/CSS assets)
-* Git
 
-### Clone & Run
+- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) or newer
+- SQL Server (LocalDB is sufficient for development)
+- Docker (optional, for SMTP service)
+- Git
+
+### Installation
+
+1. **Clone the repository**
+
 ```bash
-# Clone repository
-$ git clone https://github.com/ParsaEnayatiCE/Calmative-Portfolio.git
-$ cd Calmative-Portfolio
-
-# Restore & build solution
-$ dotnet build src/CalmativePortfolio.sln
-
-# Apply EF Core migrations
-$ dotnet ef database update --project src/Server/Calmative.Server.API --startup-project src/Server/Calmative.Server.API
-
-# Start smtp4dev (dev emails) & all apps
-$ docker compose up -d smtp
-$ dotnet run --project src/Server/Calmative.Server.API
-$ dotnet run --project src/Web/Calmative.Web.App
-$ dotnet run --project src/Admin/Calmative.Admin.Web
+git clone https://github.com/ParsaEnayatiCE/Calmative-Portfolio.git
+cd Calmative-Portfolio
 ```
 
-The Web App runs at `https://localhost:7294`, the API at `https://localhost:7000`, the Admin Panel at `https://localhost:7500`, and `smtp4dev` UI at `http://localhost:3000`.
+2. **Restore dependencies and build the solution**
 
-### Environment Configuration
-Key settings are located in the respective `appsettings*.json` files:
-* **JwtSettings** – secret key, issuer, audience, expiry.
-* **EmailSettings** – SMTP host, port, credentials.
-* **FrontendSettings:BaseUrl** – base URL used when generating confirmation/reset links in emails.
-* **AdminCredentials** – username and password for admin access (in `Calmative.Admin.Web`).
+```bash
+dotnet restore src/CalmativePortfolio.sln
+dotnet build src/CalmativePortfolio.sln
+```
 
----
+3. **Set up the database**
 
-## Database Migrations
-EF Core migrations live under `Calmative.Server.API/Migrations`.
+```bash
+dotnet ef database update --project src/Server/Calmative.Server.API --startup-project src/Server/Calmative.Server.API
+```
+
+4. **Start the SMTP service (optional)**
+
+```bash
+docker compose up -d smtp
+```
+
+5. **Run the applications**
+
+```bash
+# In separate terminals:
+dotnet run --project src/Server/Calmative.Server.API
+dotnet run --project src/Web/Calmative.Web.App
+dotnet run --project src/Admin/Calmative.Admin.Web
+```
+
+### Default URLs
+
+- **Web Application**: https://localhost:7294
+- **Server API**: https://localhost:7000
+- **Admin Panel**: https://localhost:7500
+- **SMTP UI**: http://localhost:3000
+
+## ⚙️ Configuration
+
+Key settings are located in the respective `appsettings.json` files:
+
+### API Settings (`src/Server/Calmative.Server.API/appsettings.json`)
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CalmativePortfolio;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "JwtSettings": {
+    "SecretKey": "your-secret-key-here",
+    "Issuer": "calmative-api",
+    "Audience": "calmative-clients",
+    "ExpiryMinutes": 60
+  },
+  "EmailSettings": {
+    "Host": "localhost",
+    "Port": 2525,
+    "EnableSsl": false,
+    "Username": "",
+    "Password": ""
+  },
+  "FrontendSettings": {
+    "BaseUrl": "https://localhost:7294"
+  }
+}
+```
+
+### Admin Credentials (`src/Admin/Calmative.Admin.Web/appsettings.json`)
+
+```json
+{
+  "AdminCredentials": {
+    "Username": "admin",
+    "Password": "Admin123!"
+  }
+}
+```
+
+## 🧩 Project Structure
+
+```
+src/
+├── CalmativePortfolio.sln           # Solution file
+├── Server/
+│   └── Calmative.Server.API/        # Backend API project
+│       ├── Controllers/             # API endpoints
+│       ├── Data/                    # Database context
+│       ├── DTOs/                    # Data transfer objects
+│       ├── Mappings/                # AutoMapper profiles
+│       ├── Migrations/              # EF Core migrations
+│       ├── Models/                  # Domain entities
+│       └── Services/                # Business logic
+├── Web/
+│   └── Calmative.Web.App/           # User frontend MVC project
+│       ├── Controllers/             # MVC controllers
+│       ├── Models/                  # View models
+│       ├── Services/                # API client services
+│       └── Views/                   # Razor views
+└── Admin/
+    └── Calmative.Admin.Web/         # Admin panel MVC project
+        ├── Controllers/             # Admin controllers
+        ├── Models/                  # Admin view models
+        └── Views/                   # Admin views
+```
+
+## 🔄 Database Migrations
+
 Generate a new migration:
+
 ```bash
-$ dotnet ef migrations add YourMigrationName --project src/Server/Calmative.Server.API --startup-project src/Server/Calmative.Server.API
+dotnet ef migrations add YourMigrationName --project src/Server/Calmative.Server.API --startup-project src/Server/Calmative.Server.API
 ```
 
----
+Apply migrations:
 
-## Docker Support
-A minimal `docker-compose.yml` is included for the development mail server:
+```bash
+dotnet ef database update --project src/Server/Calmative.Server.API --startup-project src/Server/Calmative.Server.API
+```
+
+## 🐳 Docker Support
+
+A `docker-compose.yml` file is included for development services:
+
 ```yaml
 services:
   smtp:
     image: rnwood/smtp4dev
     ports:
-      - "3000:80"   # web UI
+      - "3000:80"   # Web UI
       - "2525:25"   # SMTP
 ```
-Extend this file to add SQL Server or deploy the app in containers.
 
----
+## 🛠️ Troubleshooting
 
-## Contributing
-Pull requests are welcome!  Please open an issue first to discuss major changes.
+### Common Issues
 
----
+1. **Database Connection Errors**
+   - Verify your connection string in `appsettings.json`
+   - Ensure SQL Server is running
+   - Check if migrations have been applied
 
-## License
-This project is released under the MIT License. 
+2. **Email Verification Not Working**
+   - Confirm SMTP settings are correct
+   - Check if `smtp4dev` is running (if using for development)
+   - Verify the frontend URL in `FrontendSettings:BaseUrl`
+
+3. **JWT Authentication Issues**
+   - Ensure the secret key is properly set and consistent
+   - Check token expiration settings
+   - Verify that the client is properly sending the token
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+
+Project Link: [https://github.com/ParsaEnayatiCE/Calmative-Portfolio](https://github.com/ParsaEnayatiCE/Calmative-Portfolio) 
