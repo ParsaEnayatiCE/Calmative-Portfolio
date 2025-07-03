@@ -50,21 +50,21 @@
                                 <label asp-for="Quantity" class="form-label">
                                     <i class="fas fa-sort-numeric-up me-2"></i>@Html.DisplayNameFor(m => m.Quantity)
                                 </label>
-                                <input asp-for="Quantity" class="form-control" type="number" step="0.01" placeholder="0.00" />
+                                <input asp-for="Quantity" class="form-control" type="text" inputmode="decimal" style="direction: ltr; text-align: left;" />
                                 <span asp-validation-for="Quantity" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="PurchasePrice" class="form-label">
                                     <i class="fas fa-money-bill me-2"></i>@Html.DisplayNameFor(m => m.PurchasePrice)
                                 </label>
-                                <input asp-for="PurchasePrice" class="form-control" type="number" step="0.01" placeholder="0.00" />
+                                <input asp-for="PurchasePrice" class="form-control" type="text" inputmode="decimal" style="direction: ltr; text-align: left;" />
                                 <span asp-validation-for="PurchasePrice" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="CurrentPrice" class="form-label">
                                     <i class="fas fa-chart-line me-2"></i>@Html.DisplayNameFor(m => m.CurrentPrice)
                                 </label>
-                                <input asp-for="CurrentPrice" class="form-control" type="number" step="0.01" placeholder="0.00" />
+                                <input asp-for="CurrentPrice" class="form-control" type="text" inputmode="decimal" style="direction: ltr; text-align: left;" />
                                 <span asp-validation-for="CurrentPrice" class="text-danger"></span>
                             </div>
                         </div>

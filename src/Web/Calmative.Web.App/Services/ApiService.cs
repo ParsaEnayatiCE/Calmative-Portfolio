@@ -273,8 +273,32 @@ namespace Calmative.Web.App.Services
             try
             {
                 AddJwtTokenToHeader();
-                var response = await _httpClient.PostAsJsonAsync("asset", model);
-            return response.IsSuccessStatusCode;
+                
+                // Create a DTO that matches the server's expected format
+                var assetDto = new
+                {
+                    model.Name,
+                    model.Symbol,
+                    Type = (int)model.Type, // Send as integer to avoid enum serialization issues
+                    model.Quantity,
+                    model.PurchasePrice,
+                    model.CurrentPrice,
+                    model.PurchaseDate,
+                    PortfolioId = portfolioId
+                };
+                
+                _logger.LogInformation("Creating asset with Type: {Type}, Name: {Name}", (int)model.Type, model.Name);
+                
+                var response = await _httpClient.PostAsJsonAsync("asset", assetDto);
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    _logger.LogError("Failed to create asset. Status: {Status}, Error: {Error}", 
+                        response.StatusCode, errorContent);
+                }
+                
+                return response.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {
@@ -288,8 +312,34 @@ namespace Calmative.Web.App.Services
             try
             {
                 AddJwtTokenToHeader();
-                var response = await _httpClient.PutAsJsonAsync($"asset/{assetId}", model);
-            return response.IsSuccessStatusCode;
+                
+                // Create a DTO that matches the server's expected format
+                var assetDto = new
+                {
+                    model.Id,
+                    model.Name,
+                    model.Symbol,
+                    Type = (int)model.Type, // Send as integer to avoid enum serialization issues
+                    model.Quantity,
+                    model.PurchasePrice,
+                    model.CurrentPrice,
+                    model.PurchaseDate,
+                    PortfolioId = portfolioId
+                };
+                
+                _logger.LogInformation("Updating asset {AssetId} with Type: {Type}, Name: {Name}", 
+                    assetId, (int)model.Type, model.Name);
+                
+                var response = await _httpClient.PutAsJsonAsync($"asset/{assetId}", assetDto);
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    _logger.LogError("Failed to update asset. Status: {Status}, Error: {Error}", 
+                        response.StatusCode, errorContent);
+                }
+                
+                return response.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {
@@ -394,11 +444,26 @@ namespace Calmative.Web.App.Services
                 var response = await _httpClient.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 
-                return await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+                var result = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+                return result ?? throw new InvalidOperationException($"Failed to deserialize response to {typeof(T).Name}");
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "HTTP request to {Endpoint} failed.", endpoint);
+                if (ex.InnerException != null)
+                {
+                    _logger.LogError(ex.InnerException, "Inner exception for {Endpoint}.", endpoint);
+                }
+                throw;
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError(ex, "Failed to deserialize response from {Endpoint}.", endpoint);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error in GetAsync for {Endpoint}.", endpoint);
                 throw;
             }
         }

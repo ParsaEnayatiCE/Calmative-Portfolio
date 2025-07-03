@@ -2,16 +2,19 @@ using Calmative.Web.App.Models.ViewModels;
 using Calmative.Web.App.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics;
 
 namespace Calmative.Web.App.Controllers
 {
     public class AssetController : Controller
     {
         private readonly IApiService _apiService;
+        private readonly ILogger<AssetController> _logger;
 
-        public AssetController(IApiService apiService)
+        public AssetController(IApiService apiService, ILogger<AssetController> logger)
         {
             _apiService = apiService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -39,8 +42,57 @@ namespace Calmative.Web.App.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
+            // Log all form values for debugging
+            _logger.LogInformation("Form data received:");
+            foreach (var key in Request.Form.Keys)
+            {
+                _logger.LogInformation("  {Key}: {Value}", key, Request.Form[key]);
+            }
+
+            // Check if there's a binding error on the Type property
+            if (ModelState["Type"] != null && ModelState["Type"]?.Errors.Any() == true)
+            {
+                _logger.LogWarning("Type binding errors: {Errors}", 
+                    string.Join(", ", ModelState["Type"]?.Errors.Select(e => e.ErrorMessage) ?? Array.Empty<string>()));
+                
+                // Try to manually bind the asset type if it's a custom type
+                if (Request.Form.ContainsKey("Type") && int.TryParse(Request.Form["Type"], out int typeValue))
+                {
+                    _logger.LogInformation("Manually binding Type value from form: {TypeValue}", typeValue);
+                    
+                    if (AssetTypeHelper.IsValidAssetType(typeValue))
+                    {
+                        model.Type = (AssetType)typeValue;
+                        ModelState["Type"]?.Errors.Clear();
+                        _logger.LogInformation("Successfully bound custom asset type: {TypeValue}", typeValue);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Invalid asset type value: {TypeValue}", typeValue);
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to parse Type from form data: {FormValue}", 
+                        Request.Form.ContainsKey("Type") ? Request.Form["Type"].ToString() : "not present");
+                }
+            }
+
+            _logger.LogInformation("Creating asset with Type: {Type} ({TypeInt})", model.Type, (int)model.Type);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("ModelState is invalid. Errors by property:");
+                foreach (var key in ModelState.Keys)
+                {
+                    var modelStateEntry = ModelState[key];
+                    if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
+                    {
+                        _logger.LogWarning("  {Property}: {Errors}", key, 
+                            string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)));
+                    }
+                }
+                
                 await SetupAssetTypeSelectList();
                 return View(model);
             }
@@ -110,8 +162,57 @@ namespace Calmative.Web.App.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
+            // Log all form values for debugging
+            _logger.LogInformation("Form data received for Edit:");
+            foreach (var key in Request.Form.Keys)
+            {
+                _logger.LogInformation("  {Key}: {Value}", key, Request.Form[key]);
+            }
+
+            // Check if there's a binding error on the Type property
+            if (ModelState["Type"] != null && ModelState["Type"]?.Errors.Any() == true)
+            {
+                _logger.LogWarning("Type binding errors: {Errors}", 
+                    string.Join(", ", ModelState["Type"]?.Errors.Select(e => e.ErrorMessage) ?? Array.Empty<string>()));
+                
+                // Try to manually bind the asset type if it's a custom type
+                if (Request.Form.ContainsKey("Type") && int.TryParse(Request.Form["Type"], out int typeValue))
+                {
+                    _logger.LogInformation("Manually binding Type value from form: {TypeValue}", typeValue);
+                    
+                    if (AssetTypeHelper.IsValidAssetType(typeValue))
+                    {
+                        model.Type = (AssetType)typeValue;
+                        ModelState["Type"]?.Errors.Clear();
+                        _logger.LogInformation("Successfully bound custom asset type: {TypeValue}", typeValue);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Invalid asset type value: {TypeValue}", typeValue);
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to parse Type from form data: {FormValue}", 
+                        Request.Form.ContainsKey("Type") ? Request.Form["Type"].ToString() : "not present");
+                }
+            }
+
+            _logger.LogInformation("Updating asset {Id} with Type: {Type} ({TypeInt})", id, model.Type, (int)model.Type);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("ModelState is invalid for Edit. Errors by property:");
+                foreach (var key in ModelState.Keys)
+                {
+                    var modelStateEntry = ModelState[key];
+                    if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
+                    {
+                        _logger.LogWarning("  {Property}: {Errors}", key, 
+                            string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)));
+                    }
+                }
+                
                 ViewBag.AssetId = id;
                 ViewBag.PortfolioId = portfolioId;
                 await SetupAssetTypeSelectList();
@@ -192,7 +293,12 @@ namespace Calmative.Web.App.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Console.WriteLine($"Error fetching asset types: {ex.Message}");
+                _logger.LogError(ex, "Error fetching asset types");
+                
+                if (ex.InnerException != null)
+                {
+                    _logger.LogError(ex.InnerException, "Inner exception when fetching asset types");
+                }
                 
                 // Fallback to hardcoded types if API call fails
                 var assetTypes = new List<SelectListItem>
