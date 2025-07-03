@@ -39,14 +39,8 @@
                             <label asp-for="Type" class="form-label">
                                 <i class="fas fa-list me-2"></i>@Html.DisplayNameFor(m => m.Type)
                             </label>
-                            <select asp-for="Type" class="form-select">
+                            <select asp-for="Type" class="form-select" asp-items="ViewBag.AssetTypes">
                                 <option value="">نوع دارایی را انتخاب کنید</option>
-                                <option value="1">ارز</option>
-                                <option value="2">طلا</option>
-                                <option value="3">نقره</option>
-                                <option value="4">رمزارز</option>
-                                <option value="5">فلزات گرانبها</option>
-                                <option value="6">ماشین</option>
                             </select>
                             <span asp-validation-for="Type" class="text-danger"></span>
                         </div>

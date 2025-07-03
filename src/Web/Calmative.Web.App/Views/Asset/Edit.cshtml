@@ -41,13 +41,8 @@
                             <label class="form-label">
                                 <i class="fas fa-list me-2"></i>نوع دارایی
                             </label>
-                            <select asp-for="Type" class="form-select" disabled>
-                                <option value="Currency">ارز</option>
-                                <option value="Gold">طلا</option>
-                                <option value="Silver">نقره</option>
-                                <option value="Crypto">رمزارز</option>
-                                <option value="PreciousMetals">فلزات گرانبها</option>
-                                <option value="Car">ماشین</option>
+                            <select asp-for="Type" class="form-select" asp-items="ViewBag.AssetTypes" disabled>
+                                <option value="">نوع دارایی را انتخاب کنید</option>
                             </select>
                             <small class="text-muted">نوع دارایی قابل تغییر نیست</small>
                         </div>
