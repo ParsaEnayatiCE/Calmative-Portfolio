@@ -22,13 +22,28 @@ namespace Calmative.Admin.Web.Controllers
         {
             try
             {
-                var response = await _apiService.GetAsync<dynamic>("/api/admin/asset-types", GetAdminToken());
+                var response = await _apiService.GetAsync<JsonDocument>("/api/admin/asset-types", GetAdminToken());
                 
                 var model = new AssetTypesListViewModel
                 {
-                    BuiltInTypes = response != null ? ConvertToAssetTypeViewModels(response.BuiltInTypes, true) : new List<AssetTypeViewModel>(),
-                    CustomTypes = response != null ? ConvertToAssetTypeViewModels(response.CustomTypes, false) : new List<AssetTypeViewModel>()
+                    BuiltInTypes = new List<AssetTypeViewModel>(),
+                    CustomTypes = new List<AssetTypeViewModel>()
                 };
+                
+                if (response != null)
+                {
+                    var root = response.RootElement;
+                    
+                    if (root.TryGetProperty("builtInTypes", out var builtInTypes))
+                    {
+                        model.BuiltInTypes = ConvertToAssetTypeViewModels(builtInTypes, true);
+                    }
+                    
+                    if (root.TryGetProperty("customTypes", out var customTypes))
+                    {
+                        model.CustomTypes = ConvertToAssetTypeViewModels(customTypes, false);
+                    }
+                }
                 
                 return View(model);
             }
@@ -191,23 +206,62 @@ namespace Calmative.Admin.Web.Controllers
             return "";
         }
 
-        private List<AssetTypeViewModel> ConvertToAssetTypeViewModels(dynamic items, bool isBuiltIn)
+        private List<AssetTypeViewModel> ConvertToAssetTypeViewModels(JsonElement items, bool isBuiltIn)
         {
             var result = new List<AssetTypeViewModel>();
             
-            foreach (var item in items)
+            if (items.ValueKind != JsonValueKind.Array)
             {
-                result.Add(new AssetTypeViewModel
+                return result;
+            }
+            
+            foreach (var item in items.EnumerateArray())
+            {
+                var assetType = new AssetTypeViewModel
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    DisplayName = item.DisplayName,
-                    Description = isBuiltIn ? null : item.Description,
                     IsBuiltIn = isBuiltIn,
-                    IsActive = isBuiltIn ? true : item.IsActive,
-                    CreatedAt = isBuiltIn ? null : item.CreatedAt,
-                    UpdatedAt = isBuiltIn ? null : item.UpdatedAt
-                });
+                    IsActive = isBuiltIn ? true : false
+                };
+                
+                if (item.TryGetProperty("id", out var id))
+                {
+                    assetType.Id = id.GetInt32();
+                }
+                
+                if (item.TryGetProperty("name", out var name))
+                {
+                    assetType.Name = name.GetString() ?? string.Empty;
+                }
+                
+                if (item.TryGetProperty("displayName", out var displayName))
+                {
+                    assetType.DisplayName = displayName.GetString() ?? string.Empty;
+                }
+                
+                if (!isBuiltIn)
+                {
+                    if (item.TryGetProperty("description", out var description))
+                    {
+                        assetType.Description = description.GetString();
+                    }
+                    
+                    if (item.TryGetProperty("isActive", out var isActive))
+                    {
+                        assetType.IsActive = isActive.GetBoolean();
+                    }
+                    
+                    if (item.TryGetProperty("createdAt", out var createdAt) && createdAt.ValueKind != JsonValueKind.Null)
+                    {
+                        assetType.CreatedAt = createdAt.GetDateTime();
+                    }
+                    
+                    if (item.TryGetProperty("updatedAt", out var updatedAt) && updatedAt.ValueKind != JsonValueKind.Null)
+                    {
+                        assetType.UpdatedAt = updatedAt.GetDateTime();
+                    }
+                }
+                
+                result.Add(assetType);
             }
             
             return result;
