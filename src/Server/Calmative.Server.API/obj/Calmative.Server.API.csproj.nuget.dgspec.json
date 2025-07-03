@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Calmative Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj": {}
+    "E:\\Calmative-Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj": {}
   },
   "projects": {
-    "E:\\Calmative Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj": {
+    "E:\\Calmative-Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Calmative Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj",
+        "projectUniqueName": "E:\\Calmative-Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj",
         "projectName": "Calmative.Server.API",
-        "projectPath": "E:\\Calmative Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj",
-        "packagesPath": "C:\\Users\\p.enayati\\.nuget\\packages\\",
-        "outputPath": "E:\\Calmative Portfolio\\src\\Server\\Calmative.Server.API\\obj\\",
+        "projectPath": "E:\\Calmative-Portfolio\\src\\Server\\Calmative.Server.API\\Calmative.Server.API.csproj",
+        "packagesPath": "C:\\Users\\PCMOD\\.nuget\\packages\\",
+        "outputPath": "E:\\Calmative-Portfolio\\src\\Server\\Calmative.Server.API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\p.enayati\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\PCMOD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,7 +38,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net6.0": {
@@ -90,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.428\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

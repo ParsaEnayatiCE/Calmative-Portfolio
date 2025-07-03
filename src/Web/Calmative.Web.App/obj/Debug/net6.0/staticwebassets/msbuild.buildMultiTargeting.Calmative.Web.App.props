@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Calmative.Web.App.props" />
+</Project>
