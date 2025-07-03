@@ -1,0 +1,190 @@
+@model Calmative.Admin.Web.Models.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">User Details</h1>
+    <div>
+        <a href="@Url.Action("Index")" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Back to Users
+        </a>
+        <button type="button" class="btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            <i class="fas fa-trash fa-sm text-white-50"></i> Delete User
+        </button>
+    </div>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Information</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>ID</th>
+                            <td>@Model.User.Id</td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td>@Model.User.FirstName @Model.User.LastName</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.User.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Created At</th>
+                            <td>@Model.User.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        </tr>
+                        <tr>
+                            <th>Email Status</th>
+                            <td>
+                                @if(Model.User.IsEmailConfirmed)
+                                {
+                                    <span class="badge bg-success text-white">Confirmed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Portfolios</h6>
+            </div>
+            <div class="card-body">
+                @if (Model.Portfolios != null && Model.Portfolios.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Created</th>
+                                    <th>Assets</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var portfolio in Model.Portfolios)
+                                {
+                                    <tr>
+                                        <td>@portfolio.Name</td>
+                                        <td>@(string.IsNullOrEmpty(portfolio.Description) ? "-" : portfolio.Description)</td>
+                                        <td>@portfolio.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                        <td>@portfolio.AssetsCount</td>
+                                        <td>@portfolio.TotalValue.ToString("C")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">
+                        This user doesn't have any portfolios yet.
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Activities -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Recent Activities</h6>
+    </div>
+    <div class="card-body">
+        @if (Model.Activities != null && Model.Activities.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Action</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var activity in Model.Activities)
+                        {
+                            <tr>
+                                <td>@activity.Timestamp.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>
+                                    @if (activity.Type == "PortfolioCreated")
+                                    {
+                                        <span class="badge bg-primary">Created Portfolio</span>
+                                    }
+                                    else if (activity.Type == "AssetAdded")
+                                    {
+                                        <span class="badge bg-success">Added Asset</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-info">@activity.Type</span>
+                                    }
+                                </td>
+                                <td>@activity.Description</td>
+                                <td>@activity.EntityType #@activity.EntityId</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">
+                No recent activities found for this user.
+            </p>
+        }
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete user <strong>@Model.User.FirstName @Model.User.LastName</strong>?</p>
+                <p>This will delete all of the user's portfolios and assets. This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form asp-action="Delete" asp-route-id="@Model.User.Id" method="post">
+                    <button type="submit" class="btn btn-danger">Delete Permanently</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -19,6 +19,12 @@ services:
       timeout: 10s
       retries: 3
       start_period: 60s
+      
+  smtp:
+    image: rnwood/smtp4dev
+    ports:
+      - "3000:80"   # web UI
+      - "2525:25"   # SMTP
 
 volumes:
   calmative_data:
