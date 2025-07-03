@@ -10,7 +10,12 @@ namespace Calmative.Web.App.Models.ViewModels
         Silver = 3,
         Crypto = 4,
         PreciousMetals = 5,
-        Car = 6
+        Car = 6,
+        RealEstate = 7,
+        Stock = 8,
+        Bond = 9,
+        ETF = 10,
+        Custom = 11
     }
 
     public class PortfolioViewModel
@@ -74,17 +79,31 @@ namespace Calmative.Web.App.Models.ViewModels
 
         public static string GetAssetTypeDisplayName(AssetType type)
         {
-            return type switch
+            // Handle built-in types
+            if (type <= AssetType.ETF)
             {
-                AssetType.Currency => "ارز",
-                AssetType.Gold => "طلا",
-                AssetType.Silver => "نقره",
-                AssetType.Crypto => "رمزارز",
-                AssetType.PreciousMetals => "فلزات گرانبها",
-                AssetType.Car => "ماشین",
-                AssetType.Unknown => "نامشخص",
-                _ => "نامشخص"
-            };
+                return type switch
+                {
+                    AssetType.Currency => "ارز",
+                    AssetType.Gold => "طلا",
+                    AssetType.Silver => "نقره",
+                    AssetType.Crypto => "رمزارز",
+                    AssetType.PreciousMetals => "فلزات گرانبها",
+                    AssetType.Car => "ماشین",
+                    AssetType.RealEstate => "املاک",
+                    AssetType.Stock => "سهام",
+                    AssetType.Bond => "اوراق قرضه",
+                    AssetType.ETF => "صندوق‌های قابل معامله",
+                    AssetType.Custom => "سفارشی",
+                    AssetType.Unknown => "نامشخص",
+                    _ => "نامشخص"
+                };
+            }
+            
+            // For custom types (with values >= 1000), we need to fetch from the API
+            // But for display purposes, we'll just show "سفارشی" here
+            // The actual name will be displayed in the API response when fetching asset types
+            return "سفارشی";
         }
     }
 

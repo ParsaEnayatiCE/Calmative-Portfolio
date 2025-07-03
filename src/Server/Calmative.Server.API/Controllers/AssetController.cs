@@ -1,7 +1,10 @@
+using Calmative.Server.API.Data;
 using Calmative.Server.API.DTOs;
+using Calmative.Server.API.Models;
 using Calmative.Server.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Calmative.Server.API.Controllers
@@ -12,10 +15,17 @@ namespace Calmative.Server.API.Controllers
     public class AssetController : ControllerBase
     {
         private readonly IAssetService _assetService;
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<AssetController> _logger;
 
-        public AssetController(IAssetService assetService)
+        public AssetController(
+            IAssetService assetService, 
+            ApplicationDbContext context,
+            ILogger<AssetController> logger)
         {
             _assetService = assetService;
+            _context = context;
+            _logger = logger;
         }
 
         [HttpGet("portfolio/{portfolioId}")]
@@ -109,10 +119,73 @@ namespace Calmative.Server.API.Controllers
             return Ok(new { message = "Asset prices updated successfully" });
         }
 
+        [HttpGet("types")]
+        public async Task<IActionResult> GetAssetTypes()
+        {
+            try
+            {
+                // Get all built-in asset types from enum
+                var builtInAssetTypes = Enum.GetValues(typeof(AssetType))
+                    .Cast<AssetType>()
+                    .Select(t => new
+                    {
+                        Id = (int)t,
+                        Name = t.ToString(),
+                        DisplayName = GetAssetTypeDisplayName(t),
+                        IsBuiltIn = true
+                    })
+                    .ToList();
+
+                // Get all custom asset types that are active
+                var customAssetTypes = await _context.CustomAssetTypes
+                    .Where(t => t.IsActive)
+                    .Select(t => new
+                    {
+                        t.Id,
+                        t.Name,
+                        t.DisplayName,
+                        IsActive = t.IsActive
+                    })
+                    .ToListAsync();
+
+                var result = new
+                {
+                    BuiltInTypes = builtInAssetTypes,
+                    CustomTypes = customAssetTypes
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving asset types");
+                return StatusCode(500, new { message = "An error occurred while retrieving asset types." });
+            }
+        }
+
         private int? GetCurrentUserId()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             return int.TryParse(userIdClaim, out var userId) ? userId : null;
+        }
+
+        private string GetAssetTypeDisplayName(AssetType type)
+        {
+            return type switch
+            {
+                AssetType.Currency => "ارز",
+                AssetType.Gold => "طلا",
+                AssetType.Silver => "نقره",
+                AssetType.Crypto => "رمزارز",
+                AssetType.PreciousMetals => "فلزات گرانبها",
+                AssetType.Car => "ماشین",
+                AssetType.RealEstate => "املاک",
+                AssetType.Stock => "سهام",
+                AssetType.Bond => "اوراق قرضه",
+                AssetType.ETF => "صندوق‌های قابل معامله",
+                AssetType.Custom => "سفارشی",
+                _ => type.ToString()
+            };
         }
     }
 } 

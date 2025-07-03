@@ -30,5 +30,8 @@ namespace Calmative.Web.App.Services
         // Dashboard
         Task<DashboardViewModel?> GetDashboard();
         Task<List<PriceHistoryDto>?> GetAssetPriceHistory(int assetId);
+        
+        // Generic API calls
+        Task<T> GetAsync<T>(string endpoint);
     }
 } 

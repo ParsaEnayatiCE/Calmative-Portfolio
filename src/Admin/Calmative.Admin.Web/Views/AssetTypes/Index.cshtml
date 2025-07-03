@@ -1,0 +1,168 @@
+@model Calmative.Admin.Web.Models.AssetTypesListViewModel
+
+@{
+    ViewData["Title"] = "مدیریت انواع دارایی";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">مدیریت انواع دارایی</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> افزودن نوع دارایی جدید
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">انواع دارایی پیش‌فرض</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>شناسه</th>
+                                    <th>نام</th>
+                                    <th>نام نمایشی</th>
+                                    <th>نوع</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var assetType in Model.BuiltInTypes)
+                                {
+                                    <tr>
+                                        <td>@assetType.Id</td>
+                                        <td>@assetType.Name</td>
+                                        <td>@assetType.DisplayName</td>
+                                        <td><span class="badge bg-primary">پیش‌فرض</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">انواع دارایی سفارشی</h6>
+                </div>
+                <div class="card-body">
+                    @if (Model.CustomTypes.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>شناسه</th>
+                                        <th>نام</th>
+                                        <th>نام نمایشی</th>
+                                        <th>توضیحات</th>
+                                        <th>وضعیت</th>
+                                        <th>تاریخ ایجاد</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var assetType in Model.CustomTypes)
+                                    {
+                                        <tr>
+                                            <td>@assetType.Id</td>
+                                            <td>@assetType.Name</td>
+                                            <td>@assetType.DisplayName</td>
+                                            <td>@(string.IsNullOrEmpty(assetType.Description) ? "-" : assetType.Description)</td>
+                                            <td>
+                                                @if (assetType.IsActive)
+                                                {
+                                                    <span class="badge bg-success">فعال</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">غیرفعال</span>
+                                                }
+                                            </td>
+                                            <td>@(assetType.CreatedAt.HasValue ? assetType.CreatedAt.Value.ToString("yyyy/MM/dd HH:mm") : "-")</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a asp-action="Edit" asp-route-id="@assetType.Id" class="btn btn-sm btn-warning">
+                                                        <i class="fas fa-edit"></i> ویرایش
+                                                    </a>
+                                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@assetType.Id">
+                                                        <i class="fas fa-trash"></i> حذف
+                                                    </button>
+                                                </div>
+
+                                                <!-- Delete Modal -->
+                                                <div class="modal fade" id="deleteModal-@assetType.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@assetType.Id" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel-@assetType.Id">تایید حذف</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                آیا از حذف نوع دارایی <strong>@assetType.DisplayName</strong> اطمینان دارید؟
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                                                                <form asp-action="Delete" asp-route-id="@assetType.Id" method="post">
+                                                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <p class="text-muted">هیچ نوع دارایی سفارشی یافت نشد.</p>
+                            <a asp-action="Create" class="btn btn-primary">
+                                <i class="fas fa-plus-circle me-1"></i> افزودن نوع دارایی جدید
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Auto-dismiss alerts after 5 seconds
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 5000);
+        });
+    </script>
+} 

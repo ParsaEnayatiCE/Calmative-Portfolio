@@ -14,6 +14,7 @@ namespace Calmative.Admin.Web.Services
     {
         Task<T> GetAsync<T>(string endpoint, string adminToken);
         Task<HttpResponseMessage> PostAsync(string endpoint, object data, string adminToken = null);
+        Task<HttpResponseMessage> PutAsync(string endpoint, object data, string adminToken = null);
         Task<HttpResponseMessage> DeleteAsync(string endpoint, string adminToken = null);
     }
 
@@ -51,16 +52,28 @@ namespace Calmative.Admin.Web.Services
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}{endpoint}");
             
-            if (data != null)
-            {
-                var json = JsonSerializer.Serialize(data);
-                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            }
-
             if (!string.IsNullOrEmpty(adminToken))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
             }
+
+            var json = JsonSerializer.Serialize(data);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            return await _httpClient.SendAsync(request);
+        }
+
+        public async Task<HttpResponseMessage> PutAsync(string endpoint, object data, string adminToken = null)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Put, $"{_baseUrl}{endpoint}");
+            
+            if (!string.IsNullOrEmpty(adminToken))
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
+            }
+
+            var json = JsonSerializer.Serialize(data);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             return await _httpClient.SendAsync(request);
         }

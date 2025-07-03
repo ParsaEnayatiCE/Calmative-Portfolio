@@ -28,6 +28,11 @@ namespace Calmative.Server.API.Mappings
 
             // PriceHistory mappings
             CreateMap<PriceHistory, PriceHistoryDto>();
+            
+            // CustomAssetType mappings
+            CreateMap<CustomAssetType, CustomAssetTypeDto>();
+            CreateMap<CreateCustomAssetTypeDto, CustomAssetType>();
+            CreateMap<UpdateCustomAssetTypeDto, CustomAssetType>();
         }
     }
 } 

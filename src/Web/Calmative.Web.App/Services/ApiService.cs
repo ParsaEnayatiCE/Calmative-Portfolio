@@ -377,12 +377,29 @@ namespace Calmative.Web.App.Services
             try
             {
                 AddJwtTokenToHeader();
-                return await _httpClient.GetFromJsonAsync<List<PriceHistoryDto>>($"asset/{assetId}/price-history", _jsonOptions);
+                return await _httpClient.GetFromJsonAsync<List<PriceHistoryDto>>($"asset/{assetId}/price-history");
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "HTTP request to get asset price history failed.");
                 return null;
+            }
+        }
+
+        public async Task<T> GetAsync<T>(string endpoint)
+        {
+            try
+            {
+                AddJwtTokenToHeader();
+                var response = await _httpClient.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                
+                return await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "HTTP request to {Endpoint} failed.", endpoint);
+                throw;
             }
         }
     }

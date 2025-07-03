@@ -1,3 +1,4 @@
+using AutoMapper;
 using Calmative.Server.API.Data;
 using Calmative.Server.API.DTOs;
 using Calmative.Server.API.Models;
@@ -13,11 +14,16 @@ namespace Calmative.Server.API.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<AdminController> _logger;
+        private readonly IMapper _mapper;
 
-        public AdminController(ApplicationDbContext context, ILogger<AdminController> logger)
+        public AdminController(
+            ApplicationDbContext context, 
+            ILogger<AdminController> logger,
+            IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("users")]
@@ -101,7 +107,7 @@ namespace Calmative.Server.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving portfolios for user ID {UserId}", id);
+                _logger.LogError(ex, "Error retrieving portfolios for user with ID {UserId}", id);
                 return StatusCode(500, new { message = "An error occurred while retrieving user portfolios." });
             }
         }
@@ -111,50 +117,82 @@ namespace Calmative.Server.API.Controllers
         {
             try
             {
-                // Gathering user activities from different sources
-                
-                // 1. Get portfolio creations
+                // Check if user exists
+                var userExists = await _context.Users.AnyAsync(u => u.Id == id);
+                if (!userExists)
+                {
+                    return NotFound(new { message = $"User with ID {id} not found." });
+                }
+
+                // Get user registration
+                var user = await _context.Users
+                    .Where(u => u.Id == id)
+                    .Select(u => new
+                    {
+                        u.Id,
+                        u.FirstName,
+                        u.LastName,
+                        u.Email,
+                        u.CreatedAt
+                    })
+                    .FirstAsync();
+
+                // Get portfolio creations
                 var portfolioCreations = await _context.Portfolios
                     .Where(p => p.UserId == id)
                     .OrderByDescending(p => p.CreatedAt)
-                    .Take(5)
                     .Select(p => new
                     {
-                        Type = "PortfolioCreated",
-                        Description = $"Created portfolio '{p.Name}'",
-                        Timestamp = p.CreatedAt,
-                        EntityId = p.Id,
-                        EntityType = "Portfolio"
+                        ActivityType = "PortfolioCreation",
+                        p.Id,
+                        p.Name,
+                        p.CreatedAt,
+                        Description = $"Created portfolio: {p.Name}"
                     })
                     .ToListAsync();
 
-                // 2. Get asset additions
+                // Get asset additions
                 var assetAdditions = await _context.Assets
                     .Where(a => a.Portfolio.UserId == id)
                     .OrderByDescending(a => a.CreatedAt)
-                    .Take(5)
                     .Select(a => new
                     {
-                        Type = "AssetAdded",
-                        Description = $"Added {a.Quantity} {a.Symbol} to portfolio '{a.Portfolio.Name}'",
-                        Timestamp = a.CreatedAt,
-                        EntityId = a.Id,
-                        EntityType = "Asset"
+                        ActivityType = "AssetAddition",
+                        a.Id,
+                        a.Name,
+                        a.CreatedAt,
+                        PortfolioId = a.Portfolio.Id,
+                        PortfolioName = a.Portfolio.Name,
+                        Description = $"Added asset: {a.Name} to portfolio: {a.Portfolio.Name}"
                     })
                     .ToListAsync();
 
-                // Combine and sort activities
-                var activities = portfolioCreations
-                    .Concat(assetAdditions)
-                    .OrderByDescending(a => a.Timestamp)
-                    .Take(10)
+                // Combine all activities
+                var activities = new List<object>
+                {
+                    new
+                    {
+                        ActivityType = "UserRegistration",
+                        Id = user.Id,
+                        Name = $"{user.FirstName} {user.LastName}",
+                        user.CreatedAt,
+                        Description = $"User registered with email: {user.Email}"
+                    }
+                };
+
+                activities.AddRange(portfolioCreations);
+                activities.AddRange(assetAdditions);
+
+                // Sort by creation date descending
+                var sortedActivities = activities
+                    .OrderByDescending(a => ((dynamic)a).CreatedAt)
                     .ToList();
 
-                return Ok(activities);
+                return Ok(sortedActivities);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving activities for user ID {UserId}", id);
+                _logger.LogError(ex, "Error retrieving activities for user with ID {UserId}", id);
                 return StatusCode(500, new { message = "An error occurred while retrieving user activities." });
             }
         }
@@ -165,27 +203,16 @@ namespace Calmative.Server.API.Controllers
             try
             {
                 var user = await _context.Users.FindAsync(id);
-                
                 if (user == null)
                 {
                     return NotFound(new { message = $"User with ID {id} not found." });
                 }
 
-                // Delete all portfolios associated with this user
-                var portfolios = await _context.Portfolios.Where(p => p.UserId == id).ToListAsync();
-                
-                foreach (var portfolio in portfolios)
-                {
-                    // Assets will be automatically deleted due to cascade delete
-                    _context.Portfolios.Remove(portfolio);
-                }
-
-                // Delete the user
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("User with ID {UserId} successfully deleted", id);
-                return Ok(new { message = $"User with ID {id} was successfully deleted." });
+                return Ok(new { message = $"User with ID {id} successfully deleted." });
             }
             catch (Exception ex)
             {
@@ -235,5 +262,200 @@ namespace Calmative.Server.API.Controllers
                 return StatusCode(500, new { message = "An error occurred while retrieving dashboard data." });
             }
         }
+
+        #region Asset Types Management
+
+        [HttpGet("asset-types")]
+        public async Task<IActionResult> GetAssetTypes()
+        {
+            try
+            {
+                // Get all built-in asset types from enum
+                var builtInAssetTypes = Enum.GetValues(typeof(AssetType))
+                    .Cast<AssetType>()
+                    .Select(t => new
+                    {
+                        Id = (int)t,
+                        Name = t.ToString(),
+                        DisplayName = GetAssetTypeDisplayName(t),
+                        IsBuiltIn = true
+                    })
+                    .ToList();
+
+                // Get all custom asset types
+                var customAssetTypes = await _context.CustomAssetTypes
+                    .Select(t => new
+                    {
+                        t.Id,
+                        t.Name,
+                        t.DisplayName,
+                        t.Description,
+                        t.IsActive,
+                        t.CreatedAt,
+                        t.UpdatedAt,
+                        IsBuiltIn = false
+                    })
+                    .ToListAsync();
+
+                var result = new
+                {
+                    BuiltInTypes = builtInAssetTypes,
+                    CustomTypes = customAssetTypes
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving asset types");
+                return StatusCode(500, new { message = "An error occurred while retrieving asset types." });
+            }
+        }
+
+        [HttpGet("asset-types/custom/{id}")]
+        public async Task<IActionResult> GetCustomAssetType(int id)
+        {
+            try
+            {
+                var assetType = await _context.CustomAssetTypes.FindAsync(id);
+                if (assetType == null)
+                {
+                    return NotFound(new { message = $"Custom asset type with ID {id} not found." });
+                }
+
+                var result = _mapper.Map<CustomAssetTypeDto>(assetType);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving custom asset type with ID {AssetTypeId}", id);
+                return StatusCode(500, new { message = "An error occurred while retrieving the custom asset type." });
+            }
+        }
+
+        [HttpPost("asset-types/custom")]
+        public async Task<IActionResult> CreateCustomAssetType([FromBody] CreateCustomAssetTypeDto dto)
+        {
+            try
+            {
+                // Check if name already exists
+                var nameExists = await _context.CustomAssetTypes.AnyAsync(t => t.Name == dto.Name);
+                if (nameExists)
+                {
+                    return BadRequest(new { message = $"An asset type with the name '{dto.Name}' already exists." });
+                }
+
+                var assetType = _mapper.Map<CustomAssetType>(dto);
+                assetType.CreatedAt = DateTime.UtcNow;
+
+                _context.CustomAssetTypes.Add(assetType);
+                await _context.SaveChangesAsync();
+
+                var result = _mapper.Map<CustomAssetTypeDto>(assetType);
+                _logger.LogInformation("Custom asset type created: {AssetTypeName}", assetType.Name);
+
+                return CreatedAtAction(nameof(GetCustomAssetType), new { id = result.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating custom asset type");
+                return StatusCode(500, new { message = "An error occurred while creating the custom asset type." });
+            }
+        }
+
+        [HttpPut("asset-types/custom/{id}")]
+        public async Task<IActionResult> UpdateCustomAssetType(int id, [FromBody] UpdateCustomAssetTypeDto dto)
+        {
+            try
+            {
+                var assetType = await _context.CustomAssetTypes.FindAsync(id);
+                if (assetType == null)
+                {
+                    return NotFound(new { message = $"Custom asset type with ID {id} not found." });
+                }
+
+                // Check if name already exists (excluding this asset type)
+                var nameExists = await _context.CustomAssetTypes
+                    .AnyAsync(t => t.Name == dto.Name && t.Id != id);
+                    
+                if (nameExists)
+                {
+                    return BadRequest(new { message = $"Another asset type with the name '{dto.Name}' already exists." });
+                }
+
+                _mapper.Map(dto, assetType);
+                assetType.UpdatedAt = DateTime.UtcNow;
+
+                await _context.SaveChangesAsync();
+
+                var result = _mapper.Map<CustomAssetTypeDto>(assetType);
+                _logger.LogInformation("Custom asset type updated: {AssetTypeName}", assetType.Name);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating custom asset type with ID {AssetTypeId}", id);
+                return StatusCode(500, new { message = "An error occurred while updating the custom asset type." });
+            }
+        }
+
+        [HttpDelete("asset-types/custom/{id}")]
+        public async Task<IActionResult> DeleteCustomAssetType(int id)
+        {
+            try
+            {
+                var assetType = await _context.CustomAssetTypes.FindAsync(id);
+                if (assetType == null)
+                {
+                    return NotFound(new { message = $"Custom asset type with ID {id} not found." });
+                }
+
+                // Check if any assets are using this type
+                var assetsUsingType = await _context.Assets
+                    .AnyAsync(a => (int)a.Type == id + 1000); // Custom asset types start from 1000
+
+                if (assetsUsingType)
+                {
+                    return BadRequest(new { message = "This asset type is in use and cannot be deleted." });
+                }
+
+                _context.CustomAssetTypes.Remove(assetType);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Custom asset type deleted: {AssetTypeName}", assetType.Name);
+                return Ok(new { message = $"Custom asset type '{assetType.Name}' successfully deleted." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting custom asset type with ID {AssetTypeId}", id);
+                return StatusCode(500, new { message = "An error occurred while deleting the custom asset type." });
+            }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private string GetAssetTypeDisplayName(AssetType type)
+        {
+            return type switch
+            {
+                AssetType.Currency => "ارز",
+                AssetType.Gold => "طلا",
+                AssetType.Silver => "نقره",
+                AssetType.Crypto => "رمزارز",
+                AssetType.PreciousMetals => "فلزات گرانبها",
+                AssetType.Car => "ماشین",
+                AssetType.RealEstate => "املاک",
+                AssetType.Stock => "سهام",
+                AssetType.Bond => "اوراق قرضه",
+                AssetType.ETF => "صندوق‌های قابل معامله",
+                AssetType.Custom => "سفارشی",
+                _ => type.ToString()
+            };
+        }
+
+        #endregion
     }
 } 

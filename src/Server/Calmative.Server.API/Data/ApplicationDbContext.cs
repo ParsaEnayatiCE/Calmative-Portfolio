@@ -13,6 +13,7 @@ namespace Calmative.Server.API.Data
         public DbSet<Portfolio> Portfolios { get; set; } = null!;
         public DbSet<Asset> Assets { get; set; } = null!;
         public DbSet<PriceHistory> PriceHistories { get; set; } = null!;
+        public DbSet<CustomAssetType> CustomAssetTypes { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +68,16 @@ namespace Calmative.Server.API.Data
                 entity.Property(e => e.Source).HasMaxLength(50);
                 
                 entity.HasIndex(e => new { e.Symbol, e.Timestamp });
+            });
+
+            // CustomAssetType configuration
+            modelBuilder.Entity<CustomAssetType>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.DisplayName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(200);
+                entity.HasIndex(e => e.Name).IsUnique();
             });
 
             // Seed initial data

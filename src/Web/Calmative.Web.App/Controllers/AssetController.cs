@@ -157,20 +157,57 @@ namespace Calmative.Web.App.Controllers
             return RedirectToAction("Details", "Portfolio", new { id = portfolioId });
         }
 
-        private Task SetupAssetTypeSelectList()
+        private async Task SetupAssetTypeSelectList()
         {
-            var assetTypes = new List<SelectListItem>
+            try
             {
-                new SelectListItem { Value = "1", Text = "ارز" },
-                new SelectListItem { Value = "2", Text = "طلا" },
-                new SelectListItem { Value = "3", Text = "نقره" },
-                new SelectListItem { Value = "4", Text = "رمزارز" },
-                new SelectListItem { Value = "5", Text = "فلزات گرانبها" },
-                new SelectListItem { Value = "6", Text = "ماشین" }
-            };
+                // Get asset types from API
+                var assetTypesResponse = await _apiService.GetAsync<AssetTypesResponse>("api/asset-types");
+                
+                var selectListItems = new List<SelectListItem>();
+                
+                // Add built-in types
+                foreach (var type in assetTypesResponse.BuiltInTypes)
+                {
+                    selectListItems.Add(new SelectListItem
+                    {
+                        Value = type.Id.ToString(),
+                        Text = type.DisplayName
+                    });
+                }
+                
+                // Add custom types that are active
+                foreach (var type in assetTypesResponse.CustomTypes.Where(t => t.IsActive))
+                {
+                    // Custom types will have ID offset by 1000 to avoid conflicts with built-in types
+                    selectListItems.Add(new SelectListItem
+                    {
+                        Value = (type.Id + 1000).ToString(),
+                        Text = type.DisplayName
+                    });
+                }
+                
+                ViewBag.AssetTypes = selectListItems;
+            }
+            catch
+            {
+                // Fallback to hardcoded types if API call fails
+                var assetTypes = new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "1", Text = "ارز" },
+                    new SelectListItem { Value = "2", Text = "طلا" },
+                    new SelectListItem { Value = "3", Text = "نقره" },
+                    new SelectListItem { Value = "4", Text = "رمزارز" },
+                    new SelectListItem { Value = "5", Text = "فلزات گرانبها" },
+                    new SelectListItem { Value = "6", Text = "ماشین" },
+                    new SelectListItem { Value = "7", Text = "املاک" },
+                    new SelectListItem { Value = "8", Text = "سهام" },
+                    new SelectListItem { Value = "9", Text = "اوراق قرضه" },
+                    new SelectListItem { Value = "10", Text = "صندوق‌های قابل معامله" }
+                };
 
-            ViewBag.AssetTypes = assetTypes;
-            return Task.CompletedTask;
+                ViewBag.AssetTypes = assetTypes;
+            }
         }
 
         private bool IsUserLoggedIn()
@@ -178,5 +215,19 @@ namespace Calmative.Web.App.Controllers
             return Request.Cookies.ContainsKey("jwt_token") && 
                    !string.IsNullOrEmpty(Request.Cookies["jwt_token"]);
         }
+    }
+
+    public class AssetTypesResponse
+    {
+        public List<AssetTypeItem> BuiltInTypes { get; set; } = new();
+        public List<AssetTypeItem> CustomTypes { get; set; } = new();
+    }
+
+    public class AssetTypeItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
     }
 } 
