@@ -162,7 +162,7 @@ namespace Calmative.Web.App.Controllers
             try
             {
                 // Get asset types from API
-                var assetTypesResponse = await _apiService.GetAsync<AssetTypesResponse>("api/asset-types");
+                var assetTypesResponse = await _apiService.GetAsync<AssetTypesResponse>("asset/types");
                 
                 var selectListItems = new List<SelectListItem>();
                 
@@ -189,8 +189,11 @@ namespace Calmative.Web.App.Controllers
                 
                 ViewBag.AssetTypes = selectListItems;
             }
-            catch
+            catch (Exception ex)
             {
+                // Log the error
+                Console.WriteLine($"Error fetching asset types: {ex.Message}");
+                
                 // Fallback to hardcoded types if API call fails
                 var assetTypes = new List<SelectListItem>
                 {
