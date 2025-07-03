@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Calmative.Server.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e4f9e7037da620a39a243d68602a8cfd7e55331")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8063d73e9c0af4d7cbdfcd7c246bb5530c2c9efa")]
 [assembly: System.Reflection.AssemblyProductAttribute("Calmative.Server.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Calmative.Server.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

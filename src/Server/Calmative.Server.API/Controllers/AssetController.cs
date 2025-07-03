@@ -124,6 +124,8 @@ namespace Calmative.Server.API.Controllers
         {
             try
             {
+                _logger.LogInformation("GetAssetTypes endpoint called");
+                
                 // Get all built-in asset types from enum
                 var builtInAssetTypes = Enum.GetValues(typeof(AssetType))
                     .Cast<AssetType>()
@@ -135,6 +137,12 @@ namespace Calmative.Server.API.Controllers
                         IsBuiltIn = true
                     })
                     .ToList();
+                
+                _logger.LogInformation("Built-in asset types count: {Count}", builtInAssetTypes.Count);
+                foreach (var type in builtInAssetTypes)
+                {
+                    _logger.LogInformation("Built-in type: {Id} - {Name} - {DisplayName}", type.Id, type.Name, type.DisplayName);
+                }
 
                 // Get all custom asset types that are active
                 var customAssetTypes = await _context.CustomAssetTypes
@@ -144,15 +152,25 @@ namespace Calmative.Server.API.Controllers
                         t.Id,
                         t.Name,
                         t.DisplayName,
+                        t.Description,
                         IsActive = t.IsActive
                     })
                     .ToListAsync();
+                
+                _logger.LogInformation("Custom asset types count: {Count}", customAssetTypes.Count);
+                foreach (var type in customAssetTypes)
+                {
+                    _logger.LogInformation("Custom type: {Id} - {Name} - {DisplayName}", type.Id, type.Name, type.DisplayName);
+                }
 
                 var result = new
                 {
                     BuiltInTypes = builtInAssetTypes,
                     CustomTypes = customAssetTypes
                 };
+                
+                _logger.LogInformation("Returning asset types: {BuiltInCount} built-in, {CustomCount} custom", 
+                    builtInAssetTypes.Count, customAssetTypes.Count);
 
                 return Ok(result);
             }
