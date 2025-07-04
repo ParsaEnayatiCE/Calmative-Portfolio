@@ -30,8 +30,10 @@ services:
     image: calmative-api:1.0
     container_name: calmative-api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Server=calmative-database;Database=CalmativePortfolioDb;User Id=SA;Password=CalmativePass123!
+      - EmailSettings__Host=smtp
+      - EmailSettings__Port=25 
     depends_on:
       calmative-database:
         condition: service_healthy
@@ -49,7 +51,7 @@ services:
     container_name: calmative-web
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ApiSettings__BaseUrl=http://calmative-api
+      - ApiSettings__BaseUrl=http://calmative-api/api/
     depends_on:
       calmative-api:
         condition: service_healthy
