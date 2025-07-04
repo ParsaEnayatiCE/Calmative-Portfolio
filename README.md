@@ -226,6 +226,53 @@ services:
       - "2525:25"   # SMTP
 ```
 
+## 🐳 Deployment with Docker Compose
+
+This project ships with production-ready Dockerfiles and a single `docker-compose.yml` that orchestrates the entire stack (SQL Server, SMTP4Dev, API, public Web, Admin panel and Nginx reverse-proxy).
+
+### 1. Build the images
+
+Option A – one by one:
+```bash
+# From project root
+docker build -f Dockerfile.api   -t calmative-api:1.0   .
+docker build -f Dockerfile.web   -t calmative-web:1.0   .
+docker build -f Dockerfile.admin -t calmative-admin:1.0 .
+```
+
+Option B – let Compose build everything that has a `build:` context (if you switch from `image:` to `build:`):
+```bash
+docker compose build
+```
+
+### 2. Start the stack
+```bash
+docker compose up -d             # starts sqlserver → api → web/admin → nginx
+```
+
+Compose waits for each service's health-check before moving to the next so first start-up may take a minute (SQL Server must finish initialization).
+
+### 3. Verify health
+```bash
+docker compose ps                # HEALTHY column should be healthy for every container
+
+# Optional – detailed health JSON for a container
+docker inspect --format '{{json .State.Health}}' calmative-api | jq
+```
+
+### 4. Interact with the system
+
+• Public site:        http://localhost/  
+• Admin panel:        http://localhost/admin/  
+• API (Swagger):      http://localhost/api/swagger
+
+### 5. Tear down
+```bash
+docker compose down              # stop & remove containers (volumes stay)
+```
+
+> ℹ️  Need HTTPS?  See `nginx/nginx.conf` – you can mount certificates and change the port mapping to `443:443`, or place the stack behind a TLS-terminating load balancer.
+
 ## 🛠️ Troubleshooting
 
 ### Common Issues

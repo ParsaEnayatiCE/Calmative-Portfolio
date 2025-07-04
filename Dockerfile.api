@@ -1,0 +1,34 @@
+# Dockerfile for Calmative Portfolio API service (calmative-api)
+# Multi-stage build for smaller final image
+
+# ---------- Build stage ----------
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+
+# Copy solution and project files first (enables layer caching)
+COPY src/CalmativePortfolio.sln ./
+COPY src/Server/Calmative.Server.API/Calmative.Server.API.csproj ./Server/Calmative.Server.API/
+
+# Restore NuGet packages
+RUN dotnet restore ./Server/Calmative.Server.API/Calmative.Server.API.csproj
+
+# Copy everything else and publish
+COPY . .
+
+# Publish the API project (note nested src folder after COPY . .)
+RUN dotnet publish ./src/Server/Calmative.Server.API/Calmative.Server.API.csproj -c Release -o /app/publish
+
+# ---------- Runtime stage ----------
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+
+# Optional: add in-container healthcheck mirroring docker-compose
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 CMD curl -f http://localhost/health || exit 1
+
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["dotnet", "Calmative.Server.API.dll"] 

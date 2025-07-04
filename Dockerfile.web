@@ -1,0 +1,29 @@
+# Dockerfile for Calmative Portfolio public web site (calmative-web)
+
+# ---------- Build stage ----------
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+
+# Copy solution and project metadata
+COPY src/CalmativePortfolio.sln ./
+COPY src/Web/Calmative.Web.App/Calmative.Web.App.csproj ./Web/Calmative.Web.App/
+
+RUN dotnet restore ./Web/Calmative.Web.App/Calmative.Web.App.csproj
+
+# Copy rest of repo and publish
+COPY . .
+RUN dotnet publish ./src/Web/Calmative.Web.App/Calmative.Web.App.csproj -c Release -o /app/publish
+
+# ---------- Runtime stage ----------
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 CMD curl -f http://localhost/ || exit 1
+
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["dotnet", "Calmative.Web.App.dll"] 

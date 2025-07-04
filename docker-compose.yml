@@ -3,7 +3,7 @@ version: '3.8'
 services:
   calmative-database:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: calmative-sqlserver
+    container_name: calmative-database
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=CalmativePass123!
@@ -14,7 +14,7 @@ services:
       - calmative_data:/var/opt/mssql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'CalmativePass123!' -Q 'SELECT 1'"]
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P 'CalmativePass123!' -C -Q 'SELECT 1' -b -o /dev/null || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -25,6 +25,81 @@ services:
     ports:
       - "3000:80"   # Web UI 
       - "2525:25"   # SMTP
+
+  calmative-api:
+    image: calmative-api:1.0
+    container_name: calmative-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=calmative-database;Database=CalmativePortfolioDb;User Id=SA;Password=CalmativePass123!
+    depends_on:
+      calmative-database:
+        condition: service_healthy
+    ports:
+      - "7000:80"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  calmative-web:
+    image: calmative-web:1.0
+    container_name: calmative-web
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ApiSettings__BaseUrl=http://calmative-api
+    depends_on:
+      calmative-api:
+        condition: service_healthy
+    ports:
+      - "7294:80"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  calmative-admin:
+    image: calmative-admin:1.0
+    container_name: calmative-admin
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ApiSettings__BaseUrl=http://calmative-api
+    depends_on:
+      calmative-api:
+        condition: service_healthy
+    ports:
+      - "7500:80"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  nginx:
+    image: nginx:alpine
+    container_name: calmative-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      calmative-web:
+        condition: service_healthy
+      calmative-admin:
+        condition: service_healthy
+      calmative-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
 volumes:
   calmative_data:
