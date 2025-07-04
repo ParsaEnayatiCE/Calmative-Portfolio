@@ -9,6 +9,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using System.Threading;
 
 namespace Calmative.Web.App.Services
 {
@@ -40,11 +41,19 @@ namespace Calmative.Web.App.Services
             var token = _httpContextAccessor.HttpContext?.Request.Cookies["jwt_token"];
             if (!string.IsNullOrEmpty(token))
             {
+                // Remove any existing Authorization header first
+                if (_httpClient.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                }
+                
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                _logger.LogDebug("JWT token added to default request headers. Token length: {Length}", token.Length);
             }
             else
             {
                 _httpClient.DefaultRequestHeaders.Authorization = null;
+                _logger.LogWarning("No JWT token found in cookies, Authorization header cleared");
             }
         }
 
@@ -432,6 +441,152 @@ namespace Calmative.Web.App.Services
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "HTTP request to get asset price history failed.");
+                return null;
+            }
+        }
+
+        public async Task<RecommendationViewModel?> GetUserRecommendations()
+        {
+            try
+            {
+                _logger.LogWarning("DEBUG: Starting GetUserRecommendations API call");
+                
+                // Check if token exists
+                var token = _httpContextAccessor.HttpContext?.Request.Cookies["jwt_token"];
+                _logger.LogWarning("DEBUG: JWT token exists: {HasToken}, Length: {TokenLength}", 
+                    !string.IsNullOrEmpty(token), token?.Length ?? 0);
+                
+                if (string.IsNullOrEmpty(token))
+                {
+                    _logger.LogWarning("DEBUG: No JWT token found in cookies");
+                    return null;
+                }
+                
+                // Explicitly set the Authorization header for this request
+                using var requestMessage = new HttpRequestMessage(HttpMethod.Get, "recommendation/user");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                
+                _logger.LogWarning("DEBUG: Making request to recommendation/user with explicit Authorization header");
+                
+                // Make the request with a timeout
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                try
+                {
+                    var response = await _httpClient.SendAsync(requestMessage, cts.Token);
+                    _logger.LogWarning("DEBUG: Response received, status code: {StatusCode}", response.StatusCode);
+                    
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        _logger.LogWarning("DEBUG: Error response content: {ErrorContent}", errorContent);
+                        return null;
+                    }
+                    
+                    // Deserialize directly from the response stream to avoid string size limits or encoding issues
+                    var result = await response.Content.ReadFromJsonAsync<RecommendationViewModel>(_jsonOptions);
+                    _logger.LogWarning("DEBUG: Deserialization successful: {HasResult}", result != null);
+                    
+                    return result;
+                }
+                catch (TaskCanceledException)
+                {
+                    _logger.LogWarning("DEBUG: API request timed out after 30 seconds");
+                    return null;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "DEBUG: HTTP request to get user recommendations failed");
+                _logger.LogWarning("DEBUG: Exception details: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
+                
+                if (ex.InnerException != null)
+                {
+                    _logger.LogWarning("DEBUG: Inner exception: {Message}, {StackTrace}", 
+                        ex.InnerException.Message, ex.InnerException.StackTrace);
+                }
+                
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError(ex, "DEBUG: JSON deserialization error in GetUserRecommendations");
+                _logger.LogWarning("DEBUG: Exception details: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "DEBUG: Unexpected error in GetUserRecommendations");
+                _logger.LogWarning("DEBUG: Exception details: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
+                return null;
+            }
+        }
+        
+        public async Task<RecommendationViewModel?> GetPortfolioRecommendations(int portfolioId)
+        {
+            try
+            {
+                _logger.LogWarning("DEBUG: Starting GetPortfolioRecommendations API call for portfolioId={PortfolioId}", portfolioId);
+                
+                // Check if token exists
+                var token = _httpContextAccessor.HttpContext?.Request.Cookies["jwt_token"];
+                _logger.LogWarning("DEBUG: JWT token exists: {HasToken}, Length: {TokenLength}", 
+                    !string.IsNullOrEmpty(token), token?.Length ?? 0);
+                
+                if (string.IsNullOrEmpty(token))
+                {
+                    _logger.LogWarning("DEBUG: No JWT token found in cookies");
+                    return null;
+                }
+                
+                // Explicitly set the Authorization header for this request
+                using var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"recommendation/portfolio/{portfolioId}");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                
+                _logger.LogWarning("DEBUG: Making request to recommendation/portfolio/{PortfolioId} with explicit Authorization header", portfolioId);
+                
+                // Make the request with a timeout
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                try
+                {
+                    var response = await _httpClient.SendAsync(requestMessage, cts.Token);
+                    _logger.LogWarning("DEBUG: Response received, status code: {StatusCode}", response.StatusCode);
+                    
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        _logger.LogWarning("DEBUG: Error response content: {ErrorContent}", errorContent);
+                        return null;
+                    }
+                    
+                    // Deserialize directly from the response stream to avoid string size limits or encoding issues
+                    var result = await response.Content.ReadFromJsonAsync<RecommendationViewModel>(_jsonOptions);
+                    _logger.LogWarning("DEBUG: Deserialization successful: {HasResult}", result != null);
+                    
+                    return result;
+                }
+                catch (TaskCanceledException)
+                {
+                    _logger.LogWarning("DEBUG: API request timed out after 30 seconds");
+                    return null;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "DEBUG: HTTP request to get portfolio recommendations failed");
+                _logger.LogWarning("DEBUG: Exception details: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
+                
+                if (ex.InnerException != null)
+                {
+                    _logger.LogWarning("DEBUG: Inner exception: {Message}, {StackTrace}", 
+                        ex.InnerException.Message, ex.InnerException.StackTrace);
+                }
+                
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "DEBUG: Unexpected error in GetPortfolioRecommendations");
+                _logger.LogWarning("DEBUG: Exception details: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
                 return null;
             }
         }

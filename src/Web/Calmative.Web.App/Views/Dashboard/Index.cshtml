@@ -5,7 +5,17 @@
 }
 
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">@ViewData["Title"]</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">@ViewData["Title"]</h1>
+        @if (Model != null && Model.PortfolioCount > 0)
+        {
+            <div>
+                <a href="/Recommendation" class="btn btn-info">
+                    <i class="fas fa-robot me-2"></i>توصیه‌های هوشمند
+                </a>
+            </div>
+        }
+    </div>
 
     @if (Model == null || Model.PortfolioCount == 0)
     {
@@ -160,34 +170,25 @@
         if (assetTypeData && assetTypeData.length > 0) {
             var ctx = document.getElementById('assetTypeDistributionChart').getContext('2d');
             var labels = assetTypeData.map(function(item) {
-                 // Assuming you have a helper in C# or can map it here
+                // Use the display name directly from the data
                 return item.assetType;
             });
             var data = assetTypeData.map(function(item) {
                 return item.value;
             });
 
-            // Persian display names mapping
-             var persianLabels = labels.map(function(label) {
-                switch (label) {
-                    case "Stock": return "سهام";
-                    case "Crypto": return "ارز دیجیتال";
-                    case "Gold": return "طلا";
-                    case "Silver": return "نقره";
-                    case "Currency": return "ارز";
-                    case "Car": return "ماشین";
-                    default: return "نامشخص";
-                }
-            });
+            // Use colors based on the number of asset types
+            var backgroundColors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#6f42c1', '#fd7e14', '#20c997', '#6c757d', '#17a2b8', '#dc3545', '#28a745'];
+            var hoverBackgroundColors = ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617', '#60616f', '#5a32a3', '#d96b12', '#199d76', '#5a6268', '#138496', '#bd2130', '#218838'];
 
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: persianLabels,
+                    labels: labels,
                     datasets: [{
                         data: data,
-                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796'],
-                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617', '#60616f'],
+                        backgroundColor: backgroundColors.slice(0, labels.length),
+                        hoverBackgroundColor: hoverBackgroundColors.slice(0, labels.length),
                         hoverBorderColor: "rgba(234, 236, 244, 1)",
                     }],
                 },

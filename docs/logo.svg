@@ -1,1 +1,16 @@
- 
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4F46E5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" ry="20" fill="url(#gradient)" />
+  <path d="M50,100 L75,125 L100,75 L125,110 L150,90" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="50" cy="100" r="6" fill="white" />
+  <circle cx="75" cy="125" r="6" fill="white" />
+  <circle cx="100" cy="75" r="6" fill="white" />
+  <circle cx="125" cy="110" r="6" fill="white" />
+  <circle cx="150" cy="90" r="6" fill="white" />
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">CALMATIVE</text>
+</svg> 

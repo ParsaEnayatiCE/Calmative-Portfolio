@@ -23,6 +23,15 @@ builder.Services.AddControllersWithViews(options =>
     options.ModelBinderProviders.Insert(0, new AssetTypeModelBinderProvider());
 });
 
+// Add authentication and authorization services
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+    });
+builder.Services.AddAuthorization();
+
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
@@ -58,8 +67,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+// Add authentication and authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseSession();
 
+// Add explicit route for Recommendation controller
+app.MapControllerRoute(
+    name: "recommendation",
+    pattern: "Recommendation/{action=Index}/{id?}",
+    defaults: new { controller = "Recommendation" });
+
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

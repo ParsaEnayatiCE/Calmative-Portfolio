@@ -136,6 +136,21 @@ namespace Calmative.Server.API.Services
                 return false;
 
             _context.Assets.Remove(asset);
+
+            // If the user no longer holds any other asset with the same symbol & type, remove its price history
+            bool userStillOwnsSymbol = await _context.Assets
+                .Include(a => a.Portfolio)
+                .AnyAsync(a => a.Portfolio.UserId == userId &&
+                               a.Symbol == asset.Symbol &&
+                               a.Type == asset.Type);
+
+            if (!userStillOwnsSymbol)
+            {
+                var histories = _context.PriceHistories
+                    .Where(ph => ph.Symbol == asset.Symbol && ph.AssetType == asset.Type);
+                _context.PriceHistories.RemoveRange(histories);
+            }
+
             await _context.SaveChangesAsync();
 
             return true;

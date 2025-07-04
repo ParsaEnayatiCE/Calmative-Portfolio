@@ -32,6 +32,13 @@ The solution consists of three main components:
 - Asset distribution analysis
 - Historical performance tracking
 
+### 🤖 AI-Powered Recommendations (v2)
+- Per-asset advice based on the last 30-days price trend and current allocation
+- Labels: «خرید بیشتر» (Buy more), «نگهداری» (Hold) or «کاهش موقعیت» (Reduce)
+- Priority (High / Medium / Low) derived from magnitude of the move
+- Diversification tips only if the portfolio totally lacks a given asset type (e.g. Real-Estate)
+- Recommendations are always generated live – no caching – so edits to price history or asset list are reflected instantly
+
 ### 🔐 Security & Authentication
 - JWT-based authentication system
 - Email verification workflow
@@ -57,6 +64,7 @@ The system follows a modern N-tier architecture:
 - **Service Layer**: Business logic implementation and API controllers
 - **Data Access Layer**: Entity Framework Core with repository pattern
 - **Database Layer**: SQL Server database with migrations
+- **AI Layer**: Intelligent recommendation system using portfolio analytics
 
 ### Technology Stack
 
@@ -64,6 +72,7 @@ The system follows a modern N-tier architecture:
 - **Frontend**: Bootstrap 5 (RTL), Chart.js, jQuery
 - **Authentication**: JWT tokens, ASP.NET Core Identity
 - **Database**: Microsoft SQL Server
+- **AI Services**: Custom recommendation engine with caching
 - **Tools**: Docker, SMTP service for emails
 
 ## 🚀 Getting Started
@@ -128,7 +137,7 @@ Key settings are located in the respective `appsettings.json` files:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CalmativePortfolio;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "DefaultConnection": "Server=localhost,1433;Database=CalmativePortfolioDb;User Id=SA;Password=CalmativePass123!;TrustServerCertificate=true;"
   },
   "JwtSettings": {
     "SecretKey": "your-secret-key-here",

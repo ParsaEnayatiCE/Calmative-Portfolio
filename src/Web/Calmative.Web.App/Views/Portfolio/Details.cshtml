@@ -55,6 +55,15 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Add AI Recommendations Button -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a asp-controller="Recommendation" asp-action="Portfolio" asp-route-portfolioId="@Model.Id" class="btn btn-info">
+                        <i class="fas fa-robot me-2"></i>دریافت توصیه‌های هوشمند برای این پورتفولیو
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
