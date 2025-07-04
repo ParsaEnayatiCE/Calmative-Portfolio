@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Calmative.Admin.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c0f3d5cf40f4c15f3ee10338bf9ecc582025098")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6cd76fe9d39bbfb0a351819ced5069a17b871fd8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Calmative.Admin.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Calmative.Admin.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
