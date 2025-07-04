@@ -1,0 +1,114 @@
+
+%--------------------------------------------------------------------------
+%
+%  M.Sc. Thesis
+%  [Put Your Thesis Title Here]
+%  By: [Put Your Name Here]
+%
+%--------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------
+%
+%  LaTeX Thesis Template (v2.2)
+%  By: Hamid Zarrabi-Zadeh
+%
+%  Contributors:
+%      Ehsan Emamjomeh-Zadeh
+%      Omid Gheibi
+%
+%--------------------------------------------------------------------------
+
+
+\documentclass[oneside,a4paper,12pt]{book}
+\usepackage{graphics}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\usepackage{caption} % for modifying the caption format
+\usepackage{pdfpages}
+
+% Define a command for right-to-left text
+\newcommand{\ltr}[1]{\beginL #1\endL}
+
+
+\newcommand*\rot{\rotatebox{90}}
+\newcommand*\OK{\ding{51}}
+
+\input{styles/common.tex}
+\input{styles/custom.tex}
+
+\begin{document}
+	
+	
+	% -------------------- Front Pages --------------------
+	
+	\pagenumbering{alph}
+	
+	\input{front/info.tex}
+	\input{front/template/title.tex}
+	
+	\input{front/template/besmellah.tex}
+
+	
+	% Uncomment the following line for adding signature page
+
+	% \input{dec.tex}
+	% \includepdf[pages={1}]{Declaration.pdf}
+	% \includepdf[pages={1}]{ApprovalSheet.pdf}
+
+	
+	\input{front/acknowledge.tex}
+	\input{front/abstract.tex}
+
+	
+	% -------------------- Table of Contents --------------------
+	
+	\pagestyle{fancy}
+	
+	\dominitoc
+	\tableofcontents \newpage
+	\listoffigures \newpage
+	\listoftables \newpage
+	%\let\clearpage
+	%\let\clearpage
+
+
+	
+	\pagenumbering{arabic}
+	
+	% -------------------- Chapters --------------------
+	
+	\include{chapters/introduction}
+	\include{chapters/literature}
+	\include{chapters/methodology}
+	\include{chapters/results}
+	\include{chapters/conclusions}
+	
+	% -------------------- Appendices --------------------
+	
+	\begin{appendix}
+		\include{chapters/appendix}
+	\end{appendix}
+	
+	% -------------------- Bibliography --------------------
+	
+	
+	\input{bibs/bibs.tex}
+	
+	
+	% -------------------- English Pages --------------------
+	
+	
+	\newgeometry{left=3cm,right=2.5cm}
+	
+	\input{front/dictionary}
+	\input{front/abstract-eng.tex}
+	\input{front/template/title-eng.tex}
+	
+	% -------------------- The End! --------------------
+	
+\end{document}
