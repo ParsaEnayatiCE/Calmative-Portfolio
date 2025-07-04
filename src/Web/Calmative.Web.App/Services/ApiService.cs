@@ -486,6 +486,14 @@ namespace Calmative.Web.App.Services
                     var result = await response.Content.ReadFromJsonAsync<RecommendationViewModel>(_jsonOptions);
                     _logger.LogWarning("DEBUG: Deserialization successful: {HasResult}", result != null);
                     
+                    if (result != null)
+                    {
+                        foreach (var a in result.RecommendedAssets)
+                        {
+                            a.TypeDisplayName = GetPersianAssetType(a.Type);
+                        }
+                    }
+                    
                     return result;
                 }
                 catch (TaskCanceledException)
@@ -562,6 +570,14 @@ namespace Calmative.Web.App.Services
                     var result = await response.Content.ReadFromJsonAsync<RecommendationViewModel>(_jsonOptions);
                     _logger.LogWarning("DEBUG: Deserialization successful: {HasResult}", result != null);
                     
+                    if (result != null)
+                    {
+                        foreach (var a in result.RecommendedAssets)
+                        {
+                            a.TypeDisplayName = GetPersianAssetType(a.Type);
+                        }
+                    }
+                    
                     return result;
                 }
                 catch (TaskCanceledException)
@@ -621,6 +637,11 @@ namespace Calmative.Web.App.Services
                 _logger.LogError(ex, "Unexpected error in GetAsync for {Endpoint}.", endpoint);
                 throw;
             }
+        }
+
+        private static string GetPersianAssetType(AssetType type)
+        {
+            return Models.ViewModels.AssetTypeHelper.GetAssetTypeDisplayName(type);
         }
     }
 } 
