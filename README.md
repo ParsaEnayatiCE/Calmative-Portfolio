@@ -262,50 +262,14 @@ docker inspect --format '{{json .State.Health}}' calmative-api | jq
 
 ### 4. Interact with the system
 
-• Public site:        http://localhost/  
-• Admin panel:        http://localhost/admin/  
-• API (Swagger):      http://localhost/api/swagger
+• Public site (via Nginx):        http://localhost/  
+  – Direct container:            http://localhost:7294/
+• Admin panel (via Nginx):        http://localhost/admin/  
+  – Direct container:            http://localhost:7500/
+• API Swagger (via Nginx):        http://localhost/api/swagger  
+  – Direct container:            http://localhost:7000/swagger
 
 ### 5. Tear down
 ```bash
 docker compose down              # stop & remove containers (volumes stay)
 ```
-
-> ℹ️  Need HTTPS?  See `nginx/nginx.conf` – you can mount certificates and change the port mapping to `443:443`, or place the stack behind a TLS-terminating load balancer.
-
-## 🛠️ Troubleshooting
-
-### Common Issues
-
-1. **Database Connection Errors**
-   - Verify your connection string in `appsettings.json`
-   - Ensure SQL Server is running
-   - Check if migrations have been applied
-
-2. **Email Verification Not Working**
-   - Confirm SMTP settings are correct
-   - Check if `smtp4dev` is running (if using for development)
-   - Verify the frontend URL in `FrontendSettings:BaseUrl`
-
-3. **JWT Authentication Issues**
-   - Ensure the secret key is properly set and consistent
-   - Check token expiration settings
-   - Verify that the client is properly sending the token
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Contact
-
-Project Link: [https://github.com/ParsaEnayatiCE/Calmative-Portfolio](https://github.com/ParsaEnayatiCE/Calmative-Portfolio) 
