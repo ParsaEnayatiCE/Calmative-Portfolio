@@ -1,12 +1,15 @@
 # Calmative Portfolio Management System
 
 <div align="center">
+  <img src="docs/logo.svg" alt="Calmative Logo" width="120" />
   <h1>Calmative Portfolio</h1>
   <h3>A comprehensive portfolio management solution for tracking diverse assets</h3>
   <p>Built with ASP.NET Core 6.0, Entity Framework Core, and modern web technologies</p>
 </div>
 
-<!-- Screenshot will be added once available -->
+<div align="center">
+  <img src="docs/screenshot-dashboard.png" alt="Dashboard Screenshot" style="max-width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" />
+</div>
 
 ## 📋 Overview
 
