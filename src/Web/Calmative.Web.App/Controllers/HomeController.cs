@@ -93,7 +93,7 @@ public class HomeController : Controller
                         var response = await _httpClient.SendAsync(request);
                         
                         results.Add($"{endpoint}_status", (int)response.StatusCode);
-                        results.Add($"{endpoint}_reason", response.ReasonPhrase);
+                        results.Add($"{endpoint}_reason", response.ReasonPhrase ?? "null");
                         
                         if (response.IsSuccessStatusCode)
                         {
@@ -106,10 +106,7 @@ public class HomeController : Controller
                     catch (Exception ex)
                     {
                         results.Add($"{endpoint}_error", ex.Message);
-                        if (ex.InnerException != null)
-                        {
-                            results.Add($"{endpoint}_inner_error", ex.InnerException.Message);
-                        }
+                        results.Add($"{endpoint}_inner_error", ex.InnerException?.Message ?? "null");
                     }
                 }
             
@@ -117,10 +114,10 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            results.Add("error", ex.Message);
+            results.Add("error", ex.Message ?? "Unknown error");
             if (ex.InnerException != null)
             {
-                results.Add("inner_error", ex.InnerException.Message);
+                results.Add("inner_error", ex.InnerException?.Message ?? "null");
             }
             return Json(results);
         }
