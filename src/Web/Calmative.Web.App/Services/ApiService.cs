@@ -641,7 +641,7 @@ namespace Calmative.Web.App.Services
 
         private static string GetPersianAssetType(AssetType type)
         {
-            return Models.ViewModels.AssetTypeHelper.GetAssetTypeDisplayName(type);
+            return Models.ViewModels.AssetViewModel.GetAssetTypeDisplayName(type);
         }
     }
 } 
