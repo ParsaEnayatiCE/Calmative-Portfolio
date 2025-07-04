@@ -30,7 +30,7 @@ services:
     image: calmative-api:1.0
     container_name: calmative-api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=calmative-database;Database=CalmativePortfolioDb;User Id=SA;Password=CalmativePass123!
     depends_on:
       calmative-database:
