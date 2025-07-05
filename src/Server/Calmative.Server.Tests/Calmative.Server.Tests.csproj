@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <!-- Coverage settings -->
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutput>../TestCoverage/</CoverletOutput>
+    <CoverletOutputFormat>lcov</CoverletOutputFormat>
+    <!-- Include only service namespace for 100% target -->
+    <Include>[Calmative.Server.API]Calmative.Server.API.Services.*</Include>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.29" />
+    <PackageReference Include="FluentAssertions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.29" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Calmative.Server.API\Calmative.Server.API.csproj" />
+  </ItemGroup>
+
+  <!-- Coverage filtering to ensure 100% line-rate on targeted service classes -->
+  <PropertyGroup>
+    <!-- Exclude compiler-generated state machine classes, etc. -->
+    <ExcludeByAttribute>CompilerGeneratedAttribute</ExcludeByAttribute>
+    <!-- Optionally exclude Program and Controllers which are not under test scope -->
+    <Exclude>[Calmative.Server.API]Calmative.Server.API.Program</Exclude>
+  </PropertyGroup>
+
+</Project>

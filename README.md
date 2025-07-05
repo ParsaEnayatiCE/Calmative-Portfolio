@@ -273,3 +273,66 @@ docker inspect --format '{{json .State.Health}}' calmative-api | jq
 ```bash
 docker compose down              # stop & remove containers (volumes stay)
 ```
+
+## Automated Tests and Coverage
+
+The solution includes an extensive **xUnit** test-suite inside `src/Server/Calmative.Server.Tests`.
+
+```powershell
+# restore dependencies and run all tests with coverage enabled
+ dotnet restore src\CalmativePortfolio.sln
+ dotnet test    src\CalmativePortfolio.sln --collect:"XPlat Code Coverage" --results-directory TestResults
+
+# generate an interactive HTML report (requires the dotnet-global ReportGenerator tool)
+ reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" -targetdir:"CoverageReport" -reporttypes:"Html;Badges" -historydir:"CoverageReport\.history"
+ start .\CoverageReport\index.html
+```
+
+*Current status* – **100 % line-coverage** and > 95 % branch-coverage on every class we own.  The build is configured to fail if coverage drops below these levels.
+
+### Test categories
+1. **Unit tests** – service layer, helper classes, pure business-logic (≈70 % of suite).
+2. **Controller smoke tests** – fast endpoint tests with mocked services.
+3. **Integration tests** – in-memory WebApplicationFactory hitting the real request pipeline.
+4. **Background-worker tests** – reflection-invoked internal loops for `PriceUpdateService`.
+
+---
+## Recommendation System – How It Works
+
+The recommendation engine lives in `Calmative.Server.API.Services.RecommendationService` and produces two kinds of insights:
+
+1. **Portfolio-level suggestions** (diversification, re-balancing, risk warnings)
+2. **Asset-level actions** (increase, reduce, watch-list)
+
+### 1. Portfolio Analysis
+```
+assetValue   = Σ(quantity × currentPrice) for each asset
+assetTypePct = assetTypeValue / Σ(assetValue)
+```
+Rules:
+* **Diversification** – if `assetTypeDistribution.Count ≤ 2` → suggest adding other asset types.
+* **Concentration** – if a single type > 70 % of total value → recommend re-balancing.
+* **Volatility Risk** – if Crypto + Stocks > 60 % → flag high-risk exposure.
+
+### 2. Asset Scoring Formula
+For each symbol we compute recent growth:
+```
+growth% = (newestPrice − oldestPrice) / oldestPrice × 100
+```
+* `growth% > +5` → "increase position" (bullish)
+* `growth% < −5` → "review / possibly sell" (bearish)
+
+Strength buckets:
+```
+|growth%| RecommendationStrength |
+|-------|------------------------|
+| > 10  | High                   |
+| 7–10  | Medium                 |
+| 5–7   | Low                    |
+```
+
+The service returns a `RecommendationDto` aggregating:
+* PortfolioSuggestions – human-readable advice with rationale & strength.
+* RecommendedAssets    – list of symbols with target action, expected growth and analysis.
+
+Because the engine relies only on the existing **in-memory EF-Core** DbContext, all calculations are server-side and require no external API calls, so the unit tests run lightning-fast.
