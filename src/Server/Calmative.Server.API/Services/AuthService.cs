@@ -45,7 +45,11 @@ namespace Calmative.Server.API.Services
             await _context.SaveChangesAsync();
 
             // Send confirmation email
-            var baseUrl = _configuration["FrontendSettings:BaseUrl"]?.TrimEnd('/') ?? "https://localhost:7294";
+            var baseUrl = _configuration["FrontendSettings:BaseUrl"]?.TrimEnd('/') ?? "http://localhost:5297";
+            if (baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            {
+                baseUrl = "http://" + baseUrl.Substring("https://".Length);
+            }
             var confirmationLink = $"{baseUrl}/Auth/ConfirmEmail?userId={user.Id}&token={HttpUtility.UrlEncode(user.ConfirmationToken)}";
             var emailBody = $"Please confirm your account by <a href='{confirmationLink}'>clicking here</a>.";
             await _emailService.SendEmailAsync(user.Email, "Confirm your email", emailBody);
@@ -118,7 +122,11 @@ namespace Calmative.Server.API.Services
             user.PasswordResetTokenExpiryTime = DateTime.UtcNow.AddHours(1);
             await _context.SaveChangesAsync();
 
-            var baseUrl = _configuration["FrontendSettings:BaseUrl"]?.TrimEnd('/') ?? "https://localhost:7294";
+            var baseUrl = _configuration["FrontendSettings:BaseUrl"]?.TrimEnd('/') ?? "http://localhost:5297";
+            if (baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            {
+                baseUrl = "http://" + baseUrl.Substring("https://".Length);
+            }
             var resetLink = $"{baseUrl}/Auth/ResetPassword?email={HttpUtility.UrlEncode(user.Email)}&token={HttpUtility.UrlEncode(user.PasswordResetToken)}";
             var emailBody = $"You can reset your password by <a href='{resetLink}'>clicking here</a>.";
             await _emailService.SendEmailAsync(user.Email, "Reset your password", emailBody);

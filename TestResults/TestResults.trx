@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="db1f7cbb-546f-460c-b67c-5912abc56544" name="PCMOD@DESKTOP-RFLF05F 2025-07-06 16:25:41" runUser="DESKTOP-RFLF05F\PCMOD" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-07-06T16:25:41.0891920+03:30" queuing="2025-07-06T16:25:41.0891922+03:30" start="2025-07-06T16:25:34.2033306+03:30" finish="2025-07-06T16:25:41.7874452+03:30" />
+  <TestSettings name="default" id="6c62ab48-f54d-48fa-875a-e6998d079cfe">
+    <Deployment runDeploymentRoot="PCMOD_DESKTOP-RFLF05F_2025-07-06_16_25_41" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="6de63260-3552-42ef-9a68-eb7e1ecd186f" testId="8987edf7-d9b6-21f0-b3fc-a17c827519e9" testName="Calmative.Server.Tests.RecommendationServiceTests.Concentrated_Portfolio_Should_Trigger_Diversification_Advice" computerName="DESKTOP-RFLF05F" duration="00:00:00.4947365" startTime="2025-07-06T16:25:41.1329879+03:30" endTime="2025-07-06T16:25:41.1329879+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6de63260-3552-42ef-9a68-eb7e1ecd186f" />
+    <UnitTestResult executionId="93a5e0e2-cde3-48ac-b7c1-1a8e17c93f3b" testId="c10bbd08-41b7-9b74-f2f2-e402971e35f6" testName="Calmative.Server.Tests.AssetServiceTests.CreateAssetAsync_ShouldCreateAsset" computerName="DESKTOP-RFLF05F" duration="00:00:00.0095771" startTime="2025-07-06T16:25:41.1373106+03:30" endTime="2025-07-06T16:25:41.1373107+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="93a5e0e2-cde3-48ac-b7c1-1a8e17c93f3b" />
+    <UnitTestResult executionId="31080312-785c-428f-806b-1689029f131f" testId="3e6ff960-b915-64cc-56f1-42807994bc07" testName="Calmative.Server.Tests.AuthServiceTests.ConfirmEmail_ShouldActivateUser" computerName="DESKTOP-RFLF05F" duration="00:00:00.1118048" startTime="2025-07-06T16:25:41.6376789+03:30" endTime="2025-07-06T16:25:41.6376790+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="31080312-785c-428f-806b-1689029f131f" />
+    <UnitTestResult executionId="fa983857-e7a3-4b31-ac26-68954537ee54" testId="1c610ace-059b-8be6-28ad-773aac2b826b" testName="Calmative.Server.Tests.ApiIntegrationTests.HealthEndpoint_ShouldReturnOk" computerName="DESKTOP-RFLF05F" duration="00:00:00.0222186" startTime="2025-07-06T16:25:41.5115262+03:30" endTime="2025-07-06T16:25:41.5115262+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fa983857-e7a3-4b31-ac26-68954537ee54" />
+    <UnitTestResult executionId="e8a1aecc-947d-4e57-bdfa-0142d3c18a21" testId="2e016e9d-f8e6-977c-f6c2-edf88ad8df3c" testName="Calmative.Server.Tests.AssetServiceTests.UpdateAsset_NoPriceChange_ShouldNotAddHistory" computerName="DESKTOP-RFLF05F" duration="00:00:00.0133215" startTime="2025-07-06T16:25:41.1561051+03:30" endTime="2025-07-06T16:25:41.1561052+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e8a1aecc-947d-4e57-bdfa-0142d3c18a21" />
+    <UnitTestResult executionId="69d331a6-17af-48d3-9c77-793ed5ab4d92" testId="4ce5858e-e960-6691-6e35-db231f65e09c" testName="Calmative.Server.Tests.AssetServiceTests.CreateAsset_InvalidPortfolio_ShouldReturnNull" computerName="DESKTOP-RFLF05F" duration="00:00:00.0012933" startTime="2025-07-06T16:25:41.1753355+03:30" endTime="2025-07-06T16:25:41.1753356+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69d331a6-17af-48d3-9c77-793ed5ab4d92" />
+    <UnitTestResult executionId="3d7a3a74-e75b-4134-93f2-496a335d7a15" testId="8ddba33d-513b-76c4-d591-aa74dc400d12" testName="Calmative.Server.Tests.PortfolioServiceTests.GetPortfolioById_InvalidUser_ShouldReturnNull" computerName="DESKTOP-RFLF05F" duration="00:00:00.0033849" startTime="2025-07-06T16:25:41.1364011+03:30" endTime="2025-07-06T16:25:41.1364012+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3d7a3a74-e75b-4134-93f2-496a335d7a15" />
+    <UnitTestResult executionId="26a02f26-5740-43c8-9182-22dd174791a0" testId="38782f5f-4ea0-1096-c91d-e51be9cbaa31" testName="Calmative.Server.Tests.PortfolioServiceTests.GetUserPortfolios_ShouldReturnList" computerName="DESKTOP-RFLF05F" duration="00:00:00.0113376" startTime="2025-07-06T16:25:41.1477855+03:30" endTime="2025-07-06T16:25:41.1477856+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="26a02f26-5740-43c8-9182-22dd174791a0" />
+    <UnitTestResult executionId="2b8a3497-05dd-4210-89c7-846c465117d2" testId="f9f39616-0fb2-9dba-eb7c-3f7d8c3742a6" testName="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;EUR&quot;, type: Currency)" computerName="DESKTOP-RFLF05F" duration="00:00:00.1213193" startTime="2025-07-06T16:25:40.9667852+03:30" endTime="2025-07-06T16:25:40.9667853+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2b8a3497-05dd-4210-89c7-846c465117d2" />
+    <UnitTestResult executionId="3c22d255-3d5b-4f05-a74c-a9a394be7e23" testId="eb52f640-554a-58d4-bfe6-58d94fdcf9d0" testName="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;USD&quot;, type: Currency)" computerName="DESKTOP-RFLF05F" duration="00:00:00.1078394" startTime="2025-07-06T16:25:41.1824844+03:30" endTime="2025-07-06T16:25:41.1824846+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3c22d255-3d5b-4f05-a74c-a9a394be7e23" />
+    <UnitTestResult executionId="0fc20a94-2cb8-4599-9055-a57b159c4391" testId="ab3a62a1-c6bc-5ad2-2b3d-6928ef863f19" testName="Calmative.Server.Tests.AuthServiceTests.Register_ShouldSucceedAndSendEmail" computerName="DESKTOP-RFLF05F" duration="00:00:00.5633321" startTime="2025-07-06T16:25:41.1993094+03:30" endTime="2025-07-06T16:25:41.1993096+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0fc20a94-2cb8-4599-9055-a57b159c4391" />
+    <UnitTestResult executionId="2ac326a0-f319-4757-ac80-a71611a493be" testId="f7e421bd-6a49-93e4-a3a2-d8b361324e36" testName="Calmative.Server.Tests.AssetServiceTests.GetAssetById_Unauthorized_ShouldReturnNull" computerName="DESKTOP-RFLF05F" duration="00:00:00.0021218" startTime="2025-07-06T16:25:41.1740070+03:30" endTime="2025-07-06T16:25:41.1740071+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2ac326a0-f319-4757-ac80-a71611a493be" />
+    <UnitTestResult executionId="e14a2ba3-0729-4389-a448-c7449ae01284" testId="828b72a4-84c4-fa85-6e03-dca2f7067c22" testName="Calmative.Server.Tests.ApiIntegrationTests.RegisterAndLogin_Flow_ShouldReturnJwt" computerName="DESKTOP-RFLF05F" duration="00:00:00.8513852" startTime="2025-07-06T16:25:41.4892357+03:30" endTime="2025-07-06T16:25:41.4892358+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e14a2ba3-0729-4389-a448-c7449ae01284" />
+    <UnitTestResult executionId="3ce407dc-2842-4db8-ad67-639508cd17ca" testId="982d4d39-b0f6-313a-4127-b27277e0559a" testName="Calmative.Server.Tests.AssetServiceTests.GetLatestPriceAsync_ShouldReturnLatest" computerName="DESKTOP-RFLF05F" duration="00:00:00.4511585" startTime="2025-07-06T16:25:41.0870915+03:30" endTime="2025-07-06T16:25:41.0870915+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3ce407dc-2842-4db8-ad67-639508cd17ca" />
+    <UnitTestResult executionId="2c786747-9ad6-4dfe-8740-dcb7a7db4e89" testId="b9a34cf2-34de-7706-d265-c31ca965a5f4" testName="Calmative.Server.Tests.AuthServiceTests.Login_Success_ShouldReturnToken" computerName="DESKTOP-RFLF05F" duration="00:00:00.2104867" startTime="2025-07-06T16:25:41.4148625+03:30" endTime="2025-07-06T16:25:41.4148627+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2c786747-9ad6-4dfe-8740-dcb7a7db4e89" />
+    <UnitTestResult executionId="24cf0754-e67d-4424-a44d-5fc0c36b847e" testId="82921dfa-9401-5602-0690-760d81f5e310" testName="Calmative.Server.Tests.AssetServiceTests.GetPortfolioAssets_InvalidPortfolio_ShouldReturnEmpty" computerName="DESKTOP-RFLF05F" duration="00:00:00.0053632" startTime="2025-07-06T16:25:41.1427263+03:30" endTime="2025-07-06T16:25:41.1427264+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="24cf0754-e67d-4424-a44d-5fc0c36b847e" />
+    <UnitTestResult executionId="47b71fae-ebb0-40f6-80a5-811597d1ae3e" testId="0c88ee08-b29a-4606-1658-d944173c4a7f" testName="Calmative.Server.Tests.PortfolioServiceTests.CreateAndGetPortfolioSummary_ShouldReturnCorrectValues" computerName="DESKTOP-RFLF05F" duration="00:00:00.4970521" startTime="2025-07-06T16:25:41.1329737+03:30" endTime="2025-07-06T16:25:41.1329738+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="47b71fae-ebb0-40f6-80a5-811597d1ae3e" />
+    <UnitTestResult executionId="f04fe5e1-46f5-477b-bd03-90fbf1fe5f2f" testId="a9064072-f5f7-371d-de08-911f2beb84e3" testName="Calmative.Server.Tests.PriceUpdateServiceTests.UpdatePrices_Should_AddPriceHistory_And_UpdateAssetPrices" computerName="DESKTOP-RFLF05F" duration="00:00:00.2387743" startTime="2025-07-06T16:25:41.6384265+03:30" endTime="2025-07-06T16:25:41.6384266+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f04fe5e1-46f5-477b-bd03-90fbf1fe5f2f" />
+    <UnitTestResult executionId="f38e089f-7a96-4a9d-8863-a414b369b7cb" testId="6cce78a1-3525-517b-e98a-08476d48bb4f" testName="Calmative.Server.Tests.AuthServiceTests.ResetPassword_InvalidToken_ShouldFail" computerName="DESKTOP-RFLF05F" duration="00:00:00.1085942" startTime="2025-07-06T16:25:41.7463329+03:30" endTime="2025-07-06T16:25:41.7463330+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f38e089f-7a96-4a9d-8863-a414b369b7cb" />
+    <UnitTestResult executionId="da962ef8-6d24-4267-81b6-a6d09a0b29c3" testId="909553ee-3581-986d-1484-ac42a5557ed3" testName="Calmative.Server.Tests.AssetServiceTests.DeleteAssetAsync_ShouldRemoveAssetAndHistory" computerName="DESKTOP-RFLF05F" duration="00:00:00.0156870" startTime="2025-07-06T16:25:41.1718491+03:30" endTime="2025-07-06T16:25:41.1718492+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da962ef8-6d24-4267-81b6-a6d09a0b29c3" />
+    <UnitTestResult executionId="867fe46b-d7a8-4609-975c-0b251d4c4926" testId="7c3c68b9-48af-7988-7869-62795e572a1b" testName="Calmative.Server.Tests.AuthServiceTests.Login_Invalid_ShouldFail" computerName="DESKTOP-RFLF05F" duration="00:00:00.0049393" startTime="2025-07-06T16:25:41.2043073+03:30" endTime="2025-07-06T16:25:41.2043073+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="867fe46b-d7a8-4609-975c-0b251d4c4926" />
+    <UnitTestResult executionId="e75a77ae-8e2f-4c0c-98ad-83654054c851" testId="9e560bbc-3519-0075-1d57-fe0e44158ae8" testName="Calmative.Server.Tests.AssetServiceTests.UpdateAssetAsync_ShouldUpdatePriceAndHistory" computerName="DESKTOP-RFLF05F" duration="00:00:00.0405325" startTime="2025-07-06T16:25:41.1276932+03:30" endTime="2025-07-06T16:25:41.1276933+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e75a77ae-8e2f-4c0c-98ad-83654054c851" />
+    <UnitTestResult executionId="286c20ba-2a1b-447e-8e2c-b2f1a04fc9fd" testId="b8e0cc0a-67a5-f3c5-a5b6-0468af84b26b" testName="Calmative.Server.Tests.PortfolioServiceTests.Summary_ZeroInvestment_ShouldHaveZeroProfitPercent" computerName="DESKTOP-RFLF05F" duration="00:00:00.0047146" startTime="2025-07-06T16:25:41.1648801+03:30" endTime="2025-07-06T16:25:41.1648802+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="286c20ba-2a1b-447e-8e2c-b2f1a04fc9fd" />
+    <UnitTestResult executionId="f7d36d1e-a28c-45ac-8ef3-113a1d57a4ce" testId="5e97f256-56f1-6013-fe1c-984921197587" testName="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;ETH&quot;, type: Crypto)" computerName="DESKTOP-RFLF05F" duration="00:00:00.2058227" startTime="2025-07-06T16:25:40.8450141+03:30" endTime="2025-07-06T16:25:40.8450143+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7d36d1e-a28c-45ac-8ef3-113a1d57a4ce" />
+    <UnitTestResult executionId="2674766d-8d9e-444f-9af0-a3b415eacbaa" testId="5dfee4e1-586a-7a10-3c7e-0e56c6951876" testName="Calmative.Server.Tests.PortfolioServiceTests.DeletePortfolio_ShouldRemove" computerName="DESKTOP-RFLF05F" duration="00:00:00.0122652" startTime="2025-07-06T16:25:41.1601033+03:30" endTime="2025-07-06T16:25:41.1601034+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2674766d-8d9e-444f-9af0-a3b415eacbaa" />
+    <UnitTestResult executionId="fa3ee4ec-3fcd-42ab-a51b-d6bcfae7906f" testId="822ce6ac-8cc3-6e7a-77ff-9167601ae6f4" testName="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;SILVER&quot;, type: Silver)" computerName="DESKTOP-RFLF05F" duration="00:00:00.1076449" startTime="2025-07-06T16:25:41.3989743+03:30" endTime="2025-07-06T16:25:41.3989746+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fa3ee4ec-3fcd-42ab-a51b-d6bcfae7906f" />
+    <UnitTestResult executionId="8eddc3f9-8d89-43ac-b6dc-80e848c21f7a" testId="f1a5d73a-f4f1-dd1d-7443-1d64f41c60ef" testName="Calmative.Server.Tests.UnitTest1.Test1" computerName="DESKTOP-RFLF05F" duration="00:00:00.0015060" startTime="2025-07-06T16:25:40.6426425+03:30" endTime="2025-07-06T16:25:40.6426520+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8eddc3f9-8d89-43ac-b6dc-80e848c21f7a" />
+    <UnitTestResult executionId="1532dfe7-bc68-45c4-9724-89c50e8bf0a3" testId="cacd7a00-fd2f-dcc5-e128-fa2b0b4071e6" testName="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;BTC&quot;, type: Crypto)" computerName="DESKTOP-RFLF05F" duration="00:00:00.1076266" startTime="2025-07-06T16:25:41.0745438+03:30" endTime="2025-07-06T16:25:41.0745439+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1532dfe7-bc68-45c4-9724-89c50e8bf0a3" />
+    <UnitTestResult executionId="2783c446-cf13-48c8-b94c-56d5a8dd4bac" testId="d02d8c82-9999-742f-de5b-ef123594c8e0" testName="Calmative.Server.Tests.AuthServiceTests.PasswordReset_RequestNonexistent_ShouldSucceedGeneric" computerName="DESKTOP-RFLF05F" duration="00:00:00.0046101" startTime="2025-07-06T16:25:41.7510017+03:30" endTime="2025-07-06T16:25:41.7510018+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2783c446-cf13-48c8-b94c-56d5a8dd4bac" />
+    <UnitTestResult executionId="5a58af2e-0650-41c8-b9d3-04a6a1c530fb" testId="b448d6e2-8ebe-bbea-3edb-ed6fa768905b" testName="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;GOLD&quot;, type: Gold)" computerName="DESKTOP-RFLF05F" duration="00:00:00.1087025" startTime="2025-07-06T16:25:41.2912551+03:30" endTime="2025-07-06T16:25:41.2912554+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5a58af2e-0650-41c8-b9d3-04a6a1c530fb" />
+    <UnitTestResult executionId="c0b00093-989d-4b97-8f3b-9e7ae41feda7" testId="ea554570-9350-9cc5-7c2c-6843cbe1dfd0" testName="Calmative.Server.Tests.AssetServiceTests.UpdateAsset_InvalidUser_ShouldReturnNull" computerName="DESKTOP-RFLF05F" duration="00:00:00.0014466" startTime="2025-07-06T16:25:41.1768143+03:30" endTime="2025-07-06T16:25:41.1768143+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c0b00093-989d-4b97-8f3b-9e7ae41feda7" />
+    <UnitTestResult executionId="7fee5110-8a53-4b05-b415-84cf07317dbd" testId="cb865cd1-b5d7-3cb8-e3b9-32f0e3cb3470" testName="Calmative.Server.Tests.AuthServiceTests.Register_DuplicateEmail_ShouldFail" computerName="DESKTOP-RFLF05F" duration="00:00:00.1108833" startTime="2025-07-06T16:25:41.5258157+03:30" endTime="2025-07-06T16:25:41.5258158+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7fee5110-8a53-4b05-b415-84cf07317dbd" />
+    <UnitTestResult executionId="4d5b9dc3-07c2-44f0-ad05-22ee803aa3a5" testId="aae15cd5-064c-0a05-a8ad-78365fc40870" testName="Calmative.Server.Tests.RecommendationServiceTests.Portfolio_Level_Recommendation_Should_Return_Results" computerName="DESKTOP-RFLF05F" duration="00:00:00.0037812" startTime="2025-07-06T16:25:41.1367888+03:30" endTime="2025-07-06T16:25:41.1367889+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4d5b9dc3-07c2-44f0-ad05-22ee803aa3a5" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Calmative.Server.Tests.ApiIntegrationTests.HealthEndpoint_ShouldReturnOk" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="1c610ace-059b-8be6-28ad-773aac2b826b">
+      <Execution id="fa983857-e7a3-4b31-ac26-68954537ee54" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.ApiIntegrationTests" name="HealthEndpoint_ShouldReturnOk" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.Register_ShouldSucceedAndSendEmail" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="ab3a62a1-c6bc-5ad2-2b3d-6928ef863f19">
+      <Execution id="0fc20a94-2cb8-4599-9055-a57b159c4391" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="Register_ShouldSucceedAndSendEmail" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.UpdateAsset_InvalidUser_ShouldReturnNull" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="ea554570-9350-9cc5-7c2c-6843cbe1dfd0">
+      <Execution id="c0b00093-989d-4b97-8f3b-9e7ae41feda7" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="UpdateAsset_InvalidUser_ShouldReturnNull" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;BTC&quot;, type: Crypto)" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="cacd7a00-fd2f-dcc5-e128-fa2b0b4071e6">
+      <Execution id="1532dfe7-bc68-45c4-9724-89c50e8bf0a3" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="GetLatestPriceFromExternalApi_Should_Return_Positive_Price" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.GetLatestPriceAsync_ShouldReturnLatest" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="982d4d39-b0f6-313a-4127-b27277e0559a">
+      <Execution id="3ce407dc-2842-4db8-ad67-639508cd17ca" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="GetLatestPriceAsync_ShouldReturnLatest" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.ResetPassword_InvalidToken_ShouldFail" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="6cce78a1-3525-517b-e98a-08476d48bb4f">
+      <Execution id="f38e089f-7a96-4a9d-8863-a414b369b7cb" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="ResetPassword_InvalidToken_ShouldFail" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;ETH&quot;, type: Crypto)" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="5e97f256-56f1-6013-fe1c-984921197587">
+      <Execution id="f7d36d1e-a28c-45ac-8ef3-113a1d57a4ce" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="GetLatestPriceFromExternalApi_Should_Return_Positive_Price" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.CreateAsset_InvalidPortfolio_ShouldReturnNull" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="4ce5858e-e960-6691-6e35-db231f65e09c">
+      <Execution id="69d331a6-17af-48d3-9c77-793ed5ab4d92" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="CreateAsset_InvalidPortfolio_ShouldReturnNull" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.PasswordReset_RequestNonexistent_ShouldSucceedGeneric" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="d02d8c82-9999-742f-de5b-ef123594c8e0">
+      <Execution id="2783c446-cf13-48c8-b94c-56d5a8dd4bac" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="PasswordReset_RequestNonexistent_ShouldSucceedGeneric" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PortfolioServiceTests.CreateAndGetPortfolioSummary_ShouldReturnCorrectValues" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="0c88ee08-b29a-4606-1658-d944173c4a7f">
+      <Execution id="47b71fae-ebb0-40f6-80a5-811597d1ae3e" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PortfolioServiceTests" name="CreateAndGetPortfolioSummary_ShouldReturnCorrectValues" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.CreateAssetAsync_ShouldCreateAsset" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="c10bbd08-41b7-9b74-f2f2-e402971e35f6">
+      <Execution id="93a5e0e2-cde3-48ac-b7c1-1a8e17c93f3b" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="CreateAssetAsync_ShouldCreateAsset" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;SILVER&quot;, type: Silver)" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="822ce6ac-8cc3-6e7a-77ff-9167601ae6f4">
+      <Execution id="fa3ee4ec-3fcd-42ab-a51b-d6bcfae7906f" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="GetLatestPriceFromExternalApi_Should_Return_Positive_Price" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;GOLD&quot;, type: Gold)" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="b448d6e2-8ebe-bbea-3edb-ed6fa768905b">
+      <Execution id="5a58af2e-0650-41c8-b9d3-04a6a1c530fb" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="GetLatestPriceFromExternalApi_Should_Return_Positive_Price" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.Login_Success_ShouldReturnToken" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="b9a34cf2-34de-7706-d265-c31ca965a5f4">
+      <Execution id="2c786747-9ad6-4dfe-8740-dcb7a7db4e89" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="Login_Success_ShouldReturnToken" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.GetAssetById_Unauthorized_ShouldReturnNull" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="f7e421bd-6a49-93e4-a3a2-d8b361324e36">
+      <Execution id="2ac326a0-f319-4757-ac80-a71611a493be" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="GetAssetById_Unauthorized_ShouldReturnNull" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;USD&quot;, type: Currency)" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="eb52f640-554a-58d4-bfe6-58d94fdcf9d0">
+      <Execution id="3c22d255-3d5b-4f05-a74c-a9a394be7e23" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="GetLatestPriceFromExternalApi_Should_Return_Positive_Price" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.RecommendationServiceTests.Concentrated_Portfolio_Should_Trigger_Diversification_Advice" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="8987edf7-d9b6-21f0-b3fc-a17c827519e9">
+      <Execution id="6de63260-3552-42ef-9a68-eb7e1ecd186f" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.RecommendationServiceTests" name="Concentrated_Portfolio_Should_Trigger_Diversification_Advice" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.Register_DuplicateEmail_ShouldFail" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="cb865cd1-b5d7-3cb8-e3b9-32f0e3cb3470">
+      <Execution id="7fee5110-8a53-4b05-b415-84cf07317dbd" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="Register_DuplicateEmail_ShouldFail" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.UpdateAsset_NoPriceChange_ShouldNotAddHistory" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="2e016e9d-f8e6-977c-f6c2-edf88ad8df3c">
+      <Execution id="e8a1aecc-947d-4e57-bdfa-0142d3c18a21" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="UpdateAsset_NoPriceChange_ShouldNotAddHistory" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.UnitTest1.Test1" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="f1a5d73a-f4f1-dd1d-7443-1d64f41c60ef">
+      <Execution id="8eddc3f9-8d89-43ac-b6dc-80e848c21f7a" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.UnitTest1" name="Test1" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.GetLatestPriceFromExternalApi_Should_Return_Positive_Price(symbol: &quot;EUR&quot;, type: Currency)" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="f9f39616-0fb2-9dba-eb7c-3f7d8c3742a6">
+      <Execution id="2b8a3497-05dd-4210-89c7-846c465117d2" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="GetLatestPriceFromExternalApi_Should_Return_Positive_Price" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PortfolioServiceTests.GetPortfolioById_InvalidUser_ShouldReturnNull" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="8ddba33d-513b-76c4-d591-aa74dc400d12">
+      <Execution id="3d7a3a74-e75b-4134-93f2-496a335d7a15" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PortfolioServiceTests" name="GetPortfolioById_InvalidUser_ShouldReturnNull" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PortfolioServiceTests.Summary_ZeroInvestment_ShouldHaveZeroProfitPercent" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="b8e0cc0a-67a5-f3c5-a5b6-0468af84b26b">
+      <Execution id="286c20ba-2a1b-447e-8e2c-b2f1a04fc9fd" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PortfolioServiceTests" name="Summary_ZeroInvestment_ShouldHaveZeroProfitPercent" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PortfolioServiceTests.DeletePortfolio_ShouldRemove" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="5dfee4e1-586a-7a10-3c7e-0e56c6951876">
+      <Execution id="2674766d-8d9e-444f-9af0-a3b415eacbaa" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PortfolioServiceTests" name="DeletePortfolio_ShouldRemove" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.RecommendationServiceTests.Portfolio_Level_Recommendation_Should_Return_Results" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="aae15cd5-064c-0a05-a8ad-78365fc40870">
+      <Execution id="4d5b9dc3-07c2-44f0-ad05-22ee803aa3a5" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.RecommendationServiceTests" name="Portfolio_Level_Recommendation_Should_Return_Results" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.DeleteAssetAsync_ShouldRemoveAssetAndHistory" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="909553ee-3581-986d-1484-ac42a5557ed3">
+      <Execution id="da962ef8-6d24-4267-81b6-a6d09a0b29c3" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="DeleteAssetAsync_ShouldRemoveAssetAndHistory" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.ConfirmEmail_ShouldActivateUser" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="3e6ff960-b915-64cc-56f1-42807994bc07">
+      <Execution id="31080312-785c-428f-806b-1689029f131f" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="ConfirmEmail_ShouldActivateUser" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.UpdateAssetAsync_ShouldUpdatePriceAndHistory" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="9e560bbc-3519-0075-1d57-fe0e44158ae8">
+      <Execution id="e75a77ae-8e2f-4c0c-98ad-83654054c851" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="UpdateAssetAsync_ShouldUpdatePriceAndHistory" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AssetServiceTests.GetPortfolioAssets_InvalidPortfolio_ShouldReturnEmpty" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="82921dfa-9401-5602-0690-760d81f5e310">
+      <Execution id="24cf0754-e67d-4424-a44d-5fc0c36b847e" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AssetServiceTests" name="GetPortfolioAssets_InvalidPortfolio_ShouldReturnEmpty" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.ApiIntegrationTests.RegisterAndLogin_Flow_ShouldReturnJwt" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="828b72a4-84c4-fa85-6e03-dca2f7067c22">
+      <Execution id="e14a2ba3-0729-4389-a448-c7449ae01284" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.ApiIntegrationTests" name="RegisterAndLogin_Flow_ShouldReturnJwt" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PortfolioServiceTests.GetUserPortfolios_ShouldReturnList" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="38782f5f-4ea0-1096-c91d-e51be9cbaa31">
+      <Execution id="26a02f26-5740-43c8-9182-22dd174791a0" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PortfolioServiceTests" name="GetUserPortfolios_ShouldReturnList" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.PriceUpdateServiceTests.UpdatePrices_Should_AddPriceHistory_And_UpdateAssetPrices" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="a9064072-f5f7-371d-de08-911f2beb84e3">
+      <Execution id="f04fe5e1-46f5-477b-bd03-90fbf1fe5f2f" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.PriceUpdateServiceTests" name="UpdatePrices_Should_AddPriceHistory_And_UpdateAssetPrices" />
+    </UnitTest>
+    <UnitTest name="Calmative.Server.Tests.AuthServiceTests.Login_Invalid_ShouldFail" storage="e:\calmative-portfolio\src\server\calmative.server.tests\bin\debug\net6.0\calmative.server.tests.dll" id="7c3c68b9-48af-7988-7869-62795e572a1b">
+      <Execution id="867fe46b-d7a8-4609-975c-0b251d4c4926" />
+      <TestMethod codeBase="E:\Calmative-Portfolio\src\Server\Calmative.Server.Tests\bin\Debug\net6.0\Calmative.Server.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Calmative.Server.Tests.AuthServiceTests" name="Login_Invalid_ShouldFail" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="8987edf7-d9b6-21f0-b3fc-a17c827519e9" executionId="6de63260-3552-42ef-9a68-eb7e1ecd186f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c10bbd08-41b7-9b74-f2f2-e402971e35f6" executionId="93a5e0e2-cde3-48ac-b7c1-1a8e17c93f3b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e6ff960-b915-64cc-56f1-42807994bc07" executionId="31080312-785c-428f-806b-1689029f131f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c610ace-059b-8be6-28ad-773aac2b826b" executionId="fa983857-e7a3-4b31-ac26-68954537ee54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2e016e9d-f8e6-977c-f6c2-edf88ad8df3c" executionId="e8a1aecc-947d-4e57-bdfa-0142d3c18a21" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4ce5858e-e960-6691-6e35-db231f65e09c" executionId="69d331a6-17af-48d3-9c77-793ed5ab4d92" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8ddba33d-513b-76c4-d591-aa74dc400d12" executionId="3d7a3a74-e75b-4134-93f2-496a335d7a15" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="38782f5f-4ea0-1096-c91d-e51be9cbaa31" executionId="26a02f26-5740-43c8-9182-22dd174791a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f9f39616-0fb2-9dba-eb7c-3f7d8c3742a6" executionId="2b8a3497-05dd-4210-89c7-846c465117d2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb52f640-554a-58d4-bfe6-58d94fdcf9d0" executionId="3c22d255-3d5b-4f05-a74c-a9a394be7e23" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab3a62a1-c6bc-5ad2-2b3d-6928ef863f19" executionId="0fc20a94-2cb8-4599-9055-a57b159c4391" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f7e421bd-6a49-93e4-a3a2-d8b361324e36" executionId="2ac326a0-f319-4757-ac80-a71611a493be" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="828b72a4-84c4-fa85-6e03-dca2f7067c22" executionId="e14a2ba3-0729-4389-a448-c7449ae01284" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="982d4d39-b0f6-313a-4127-b27277e0559a" executionId="3ce407dc-2842-4db8-ad67-639508cd17ca" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9a34cf2-34de-7706-d265-c31ca965a5f4" executionId="2c786747-9ad6-4dfe-8740-dcb7a7db4e89" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="82921dfa-9401-5602-0690-760d81f5e310" executionId="24cf0754-e67d-4424-a44d-5fc0c36b847e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0c88ee08-b29a-4606-1658-d944173c4a7f" executionId="47b71fae-ebb0-40f6-80a5-811597d1ae3e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a9064072-f5f7-371d-de08-911f2beb84e3" executionId="f04fe5e1-46f5-477b-bd03-90fbf1fe5f2f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6cce78a1-3525-517b-e98a-08476d48bb4f" executionId="f38e089f-7a96-4a9d-8863-a414b369b7cb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="909553ee-3581-986d-1484-ac42a5557ed3" executionId="da962ef8-6d24-4267-81b6-a6d09a0b29c3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c3c68b9-48af-7988-7869-62795e572a1b" executionId="867fe46b-d7a8-4609-975c-0b251d4c4926" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9e560bbc-3519-0075-1d57-fe0e44158ae8" executionId="e75a77ae-8e2f-4c0c-98ad-83654054c851" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b8e0cc0a-67a5-f3c5-a5b6-0468af84b26b" executionId="286c20ba-2a1b-447e-8e2c-b2f1a04fc9fd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e97f256-56f1-6013-fe1c-984921197587" executionId="f7d36d1e-a28c-45ac-8ef3-113a1d57a4ce" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5dfee4e1-586a-7a10-3c7e-0e56c6951876" executionId="2674766d-8d9e-444f-9af0-a3b415eacbaa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="822ce6ac-8cc3-6e7a-77ff-9167601ae6f4" executionId="fa3ee4ec-3fcd-42ab-a51b-d6bcfae7906f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f1a5d73a-f4f1-dd1d-7443-1d64f41c60ef" executionId="8eddc3f9-8d89-43ac-b6dc-80e848c21f7a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cacd7a00-fd2f-dcc5-e128-fa2b0b4071e6" executionId="1532dfe7-bc68-45c4-9724-89c50e8bf0a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d02d8c82-9999-742f-de5b-ef123594c8e0" executionId="2783c446-cf13-48c8-b94c-56d5a8dd4bac" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b448d6e2-8ebe-bbea-3edb-ed6fa768905b" executionId="5a58af2e-0650-41c8-b9d3-04a6a1c530fb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ea554570-9350-9cc5-7c2c-6843cbe1dfd0" executionId="c0b00093-989d-4b97-8f3b-9e7ae41feda7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cb865cd1-b5d7-3cb8-e3b9-32f0e3cb3470" executionId="7fee5110-8a53-4b05-b415-84cf07317dbd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aae15cd5-064c-0a05-a8ad-78365fc40870" executionId="4d5b9dc3-07c2-44f0-ad05-22ee803aa3a5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="33" executed="33" passed="33" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.5+1caef2f33e (64-bit .NET 6.0.36)&#xD;
+[xUnit.net 00:00:04.80]   Discovering: Calmative.Server.Tests&#xD;
+[xUnit.net 00:00:04.84]   Discovered:  Calmative.Server.Tests&#xD;
+[xUnit.net 00:00:04.84]   Starting:    Calmative.Server.Tests&#xD;
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]&#xD;
+      Entity Framework Core 6.0.36 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.InMemory:6.0.29' with options: StoreName=IntegrationDB &#xD;
+info: Microsoft.EntityFrameworkCore.Update[30100]&#xD;
+      Saved 7 entities to in-memory store.&#xD;
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]&#xD;
+      Failed to determine the https port for redirect.&#xD;
+info: Program[0]&#xD;
+      JWT Message received. Token present: False, Token length: 0&#xD;
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]&#xD;
+      Entity Framework Core 6.0.36 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.InMemory:6.0.29' with options: StoreName=IntegrationDB &#xD;
+info: Microsoft.EntityFrameworkCore.Update[30100]&#xD;
+      Saved 1 entities to in-memory store.&#xD;
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]&#xD;
+      Entity Framework Core 6.0.36 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.InMemory:6.0.29' with options: StoreName=IntegrationDB &#xD;
+info: Microsoft.EntityFrameworkCore.Update[30100]&#xD;
+      Saved 1 entities to in-memory store.&#xD;
+info: Program[0]&#xD;
+      JWT Message received. Token present: False, Token length: 0&#xD;
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]&#xD;
+      Entity Framework Core 6.0.36 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.InMemory:6.0.29' with options: StoreName=IntegrationDB &#xD;
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]&#xD;
+      Entity Framework Core 6.0.36 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.InMemory:6.0.29' with options: StoreName=IntegrationDB &#xD;
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]&#xD;
+      Failed to determine the https port for redirect.&#xD;
+info: Program[0]&#xD;
+      JWT Message received. Token present: False, Token length: 0&#xD;
+[xUnit.net 00:00:05.99]   Finished:    Calmative.Server.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

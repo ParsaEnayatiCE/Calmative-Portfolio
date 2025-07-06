@@ -76,4 +76,43 @@ public class PriceUpdateServiceTests
         var price = await task;
         price.Should().BeGreaterThan(0);
     }
+
+    private static PriceUpdateService CreateService()
+    {
+        var services = new ServiceCollection().BuildServiceProvider();
+        var logger = new Mock<ILogger<PriceUpdateService>>();
+        return (PriceUpdateService)Activator.CreateInstance(typeof(PriceUpdateService),
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+            null,
+            new object?[]{services, logger.Object},
+            null)!;
+    }
+
+    private static decimal InvokePrivatePrice(string method, params object[] args)
+    {
+        var svc = CreateService();
+        var mi = typeof(PriceUpdateService).GetMethod(method, BindingFlags.Instance | BindingFlags.NonPublic)!;
+        return (decimal)mi.Invoke(svc, args)!;
+    }
+
+    [Theory]
+    [InlineData("USD", AssetType.Currency, 0.8, 1.2)]
+    [InlineData("BTC", AssetType.Crypto, 30000, 60000)]
+    [InlineData("PLATINUM", AssetType.PreciousMetals, 800, 1200)]
+    public async Task GetLatestPrice_Should_Return_Positive_Range(string symbol, AssetType type, double min, double max)
+    {
+        var svc = CreateService();
+        var method = typeof(PriceUpdateService).GetMethod("GetLatestPriceFromExternalApi", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        var task = (Task<decimal>)method.Invoke(svc, new object[]{symbol, type})!;
+        var price = await task;
+        price.Should().BeGreaterThan(0);
+        price.Should().BeInRange((decimal)min, (decimal)max);
+    }
+
+    [Fact]
+    public void MockCurrencyPrice_Range()
+    {
+        var price = InvokePrivatePrice("GetMockCurrencyPrice", "EUR", new Random());
+        price.Should().BeInRange(0.7m, 0.95m);
+    }
 } 

@@ -82,4 +82,50 @@ public class RecommendationServiceTests
         var rec = await svc.GetRecommendationsForPortfolioAsync(port.Id, user.Id);
         rec.PortfolioSuggestions.Should().NotBeNull();
     }
+
+    [Fact]
+    public async Task Asset_Growth_Positive_Should_Recommend_Increase()
+    {
+        var (svc, ctx) = Build(Guid.NewGuid().ToString());
+        var user = new User { Email="g@test.com", FirstName="G", LastName="Up", PasswordHash="h", IsEmailConfirmed=true };
+        ctx.Users.Add(user);
+        await ctx.SaveChangesAsync();
+
+        var port = new Portfolio { Name="Crypto", UserId=user.Id };
+        ctx.Portfolios.Add(port);
+        await ctx.SaveChangesAsync();
+
+        ctx.Assets.Add(new Asset{ Name="ADA", Symbol="ADA", Type=AssetType.Crypto, Quantity=100, CurrentPrice=0.6m,PurchasePrice=0.5m, PurchaseDate=DateTime.UtcNow, PortfolioId=port.Id});
+        ctx.PriceHistories.AddRange(
+            new PriceHistory{Symbol="ADA", AssetType=AssetType.Crypto, Price=0.5m, Timestamp=DateTime.UtcNow.AddDays(-2)},
+            new PriceHistory{Symbol="ADA", AssetType=AssetType.Crypto, Price=0.6m, Timestamp=DateTime.UtcNow}
+        );
+        await ctx.SaveChangesAsync();
+
+        var rec = await svc.GetRecommendationsForUserAsync(user.Id);
+        rec.RecommendedAssets.Should().Contain(r=>r.Symbol=="ADA" && r.Reason.Contains("افزایش"));
+    }
+
+    [Fact]
+    public async Task Asset_Growth_Negative_Should_Recommend_Review()
+    {
+        var (svc, ctx) = Build(Guid.NewGuid().ToString());
+        var user = new User { Email="d@test.com", FirstName="D", LastName="Down", PasswordHash="h", IsEmailConfirmed=true };
+        ctx.Users.Add(user);
+        await ctx.SaveChangesAsync();
+
+        var port = new Portfolio { Name="Crypto", UserId=user.Id };
+        ctx.Portfolios.Add(port);
+        await ctx.SaveChangesAsync();
+
+        ctx.Assets.Add(new Asset{ Name="DOT", Symbol="DOT", Type=AssetType.Crypto, Quantity=50, CurrentPrice=5m,PurchasePrice=6m, PurchaseDate=DateTime.UtcNow, PortfolioId=port.Id});
+        ctx.PriceHistories.AddRange(
+            new PriceHistory{Symbol="DOT", AssetType=AssetType.Crypto, Price=6m, Timestamp=DateTime.UtcNow.AddDays(-2)},
+            new PriceHistory{Symbol="DOT", AssetType=AssetType.Crypto, Price=5m, Timestamp=DateTime.UtcNow}
+        );
+        await ctx.SaveChangesAsync();
+
+        var rec = await svc.GetRecommendationsForUserAsync(user.Id);
+        rec.RecommendedAssets.Should().Contain(r=>r.Symbol=="DOT" && r.Reason.Contains("بررسی"));
+    }
 } 
