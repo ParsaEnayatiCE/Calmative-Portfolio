@@ -126,9 +126,9 @@ dotnet run --project src/Admin/Calmative.Admin.Web
 
 ### Default URLs
 
-- **Web Application**: https://localhost:7294
-- **Server API**: https://localhost:7000
-- **Admin Panel**: https://localhost:7500
+- **Web Application**: http://localhost:7294
+- **Server API**: http://localhost:7000
+- **Admin Panel**: http://localhost:7500
 - **SMTP UI**: http://localhost:3000
 
 ## ⚙️ Configuration
